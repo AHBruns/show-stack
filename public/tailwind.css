@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* for the spinner */
+.square-spin > div {
+  background-color: #6b7280 !important;
+  border: none !important;
+}
