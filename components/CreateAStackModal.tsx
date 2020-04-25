@@ -15,7 +15,7 @@ export const CreateAStackModal = () => {
           Create A Stack
         </h1>
         <div className="mt-4">
-          <Formik initialValues={{}} onSubmit={() => {}}>
+          <Formik initialValues={{ stackName: "" }} onSubmit={() => {}}>
             {({ values, handleBlur, handleChange }) => (
               <Form>
                 <DefaultTextField
@@ -24,12 +24,16 @@ export const CreateAStackModal = () => {
                   name="stackName"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="My Awesome Stack" // cspell:words galactica
+                  placeholder="My Awesome Stack"
+                  value={values.stackName}
                 />
                 <div className="mt-4">
                   <ModalDuoButton
                     left={{
                       onClick() {
+                        alert(
+                          "Multiple stacks aren't currently supported. Check back soon."
+                        );
                         dispatch(actions.POP());
                       },
                       name: "Make it!",

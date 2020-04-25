@@ -1,130 +1,165 @@
 import React from "react";
-import useReducerWithSideEffects, {
-  UpdateWithSideEffect,
-  Update,
-} from "use-reducer-with-side-effects";
 import { IAction } from "../types/IAction";
+import { client } from "../gql/client";
+import { ADD_SHOW } from "../gql/addShow";
 
 export const StackContext = React.createContext([]);
 
 const { Provider } = StackContext;
 
+// todo : refactor into wrapper
+const sideEffects = {
+  ADD: async (payload, state, dispatch) => {
+    dispatch(actions.INC_CALLS());
+    console.log(state);
+    client
+      .mutate({
+        mutation: ADD_SHOW,
+        variables: {
+          ...payload,
+          stack_id: state.id,
+        },
+      })
+      .then((result) => console.log(result))
+      .then(() => dispatch(actions.DEC_CALLS()));
+  },
+  REMOVE: async (payload, state, dispatch) => {
+    dispatch(actions.INC_CALLS());
+    // alert(
+    //   "FETCH: REMOVE, " +
+    //     JSON.stringify(state, null, 2) +
+    //     ", " +
+    //     JSON.stringify(payload, null, 2)
+    // );
+    setTimeout(() => dispatch(actions.DEC_CALLS()), 1000);
+  },
+  UPDATE: async (payload, state, dispatch) => {
+    dispatch(actions.INC_CALLS());
+    // alert(
+    //   "FETCH: UPDATE, " +
+    //     JSON.stringify(state, null, 2) +
+    //     ", " +
+    //     JSON.stringify(payload, null, 2)
+    // );
+    setTimeout(() => dispatch(actions.DEC_CALLS()), 1000);
+  },
+};
+
 const actionTypes = {
   SET: "SET",
+  SET_ID: "SET_ID",
   ADD: "ADDING",
   REMOVE: "REMOVING",
-  REPLACE: "REPLACING",
-  READY: "READY",
+  UPDATE: "UPDATE",
+  INC_CALLS: "INC_CALLS",
+  DEC_CALLS: "DEC_CALLS",
+};
+
+export const actions = {
+  // we have data that we are replacing the entire stack with
+  // used on initialization
+  SET: (payload: any) => {
+    return { type: actionTypes.SET, payload };
+  },
+  // we are setting the stacks database ID for use in later calls
+  SET_ID: (payload: any) => {
+    return { type: actionTypes.SET_ID, payload };
+  },
+  // pushing a show onto the stack
+  ADD: (payload: any, state: IState, dispatch: React.Dispatch<IAction>) => {
+    sideEffects.ADD(payload, state, dispatch);
+    return { type: actionTypes.ADD, payload };
+  },
+  // remove a show by index from the stack
+  REMOVE: (payload: any, state: IState, dispatch: React.Dispatch<IAction>) => {
+    sideEffects.REMOVE(payload, state, dispatch);
+    return {
+      type: actionTypes.REMOVE,
+      payload,
+    };
+  },
+  // replace a show at a given index with a different show (update)
+  UPDATE: (payload: any, state: IState, dispatch: React.Dispatch<IAction>) => {
+    sideEffects.UPDATE(payload, state, dispatch);
+    return {
+      type: actionTypes.UPDATE,
+      payload,
+    };
+  },
+  INC_CALLS: () => {
+    return { type: actionTypes.INC_CALLS };
+  },
+  DEC_CALLS: () => {
+    return { type: actionTypes.DEC_CALLS };
+  },
 };
 
 export interface IState {
-  stack: object[]; // should have a tighter type here
-  isStable: boolean;
+  stack?: object[]; // should have a tighter type here
   callsOut: number;
+  id?: number;
 }
 
-export const actions = {
-  SET: (stack: object[]) => ({ type: actionTypes.SET, payload: stack }),
-  ADD: (show: object) => ({ type: actionTypes.ADD, payload: show }),
-  REMOVE: (index: number) => ({ type: actionTypes.REMOVE, payload: index }),
-  REPLACE: (index: number, show: object) => ({
-    type: actionTypes.REPLACE,
-    payload: { index, show },
-  }),
-  READY: () => ({
-    type: actionTypes.READY,
-  }),
-};
-
 export const StackProvider = ({ children }) => {
-  const [state, dispatch]: [
-    IState,
-    React.Dispatch<IAction>
-  ] = useReducerWithSideEffects(
+  const [state, dispatch]: [IState, React.Dispatch<IAction>] = React.useReducer(
     (state: IState, action: IAction) => {
       switch (action.type) {
-        case actionTypes.SET: {
-          Update({
+        case actionTypes.SET:
+          return {
             ...state,
-            callsOut: state.callsOut - 1,
-            isStable: state.callsOut <= 1,
             stack: [...action.payload],
-          });
-        }
+          };
+        case actionTypes.SET_ID:
+          return {
+            ...state,
+            id: action.payload,
+          };
         case actionTypes.ADD: {
-          UpdateWithSideEffect(
-            {
-              ...state,
-              callsOut: state.callsOut + 1,
-              isStable: false,
-              stack: [...state.stack, action.payload],
-            },
-            (_, dispatch) => {
-              alert(
-                "FETCH: ADD, " +
-                  JSON.stringify(state, null, 2) +
-                  ", " +
-                  JSON.stringify(action.payload, null, 2)
-              );
-              dispatch(actions.READY());
-            }
-          );
+          return {
+            ...state,
+            stack: [...state.stack, action.payload],
+          };
         }
         case actionTypes.REMOVE: {
-          const newStack = [...state.stack];
-          newStack.splice(action.payload, 1);
-          UpdateWithSideEffect(
-            {
-              ...state,
-              callsOut: state.callsOut + 1,
-              isStable: false,
-              stack: newStack,
-            },
-            (_, dispatch) => {
-              alert(
-                "FETCH: REMOVE, " +
-                  JSON.stringify(state, null, 2) +
-                  ", " +
-                  JSON.stringify(action.payload, null, 2)
-              );
-              dispatch(actions.READY());
-            }
-          );
+          const stack = [...state.stack];
+          stack.splice(action.payload, 1);
+          return {
+            ...state,
+            stack,
+          };
         }
-        case actionTypes.REPLACE: {
-          const newStack = [...state.stack];
-          newStack[action.payload.index] = action.payload.show;
-          UpdateWithSideEffect(
-            {
-              ...state,
-              callsOut: state.callsOut + 1,
-              isStable: false,
-              stack: newStack,
-            },
-            (_, dispatch) => {
-              alert(
-                "FETCH: REPLACE, " +
-                  JSON.stringify(state, null, 2) +
-                  ", " +
-                  JSON.stringify(action.payload, null, 2)
-              );
-              dispatch(actions.READY());
-            }
-          );
+        case actionTypes.UPDATE: {
+          const stack = [...state.stack];
+          stack[action.payload.index] = action.payload.show;
+          return {
+            ...state,
+            stack,
+          };
         }
-        case actionTypes.READY: {
-          Update({
+        case actionTypes.INC_CALLS: {
+          return {
+            ...state,
+            callsOut: state.callsOut + 1,
+          };
+        }
+        case actionTypes.DEC_CALLS: {
+          return {
             ...state,
             callsOut: state.callsOut - 1,
-            isStable: state.callsOut <= 1, // <= 1 because we are subtracting one in the same operation.
-          });
+          };
         }
         default:
-          throw new Error("unknown modals stack action");
+          throw new Error("unknown stack action type");
       }
     },
-    { stack: [], callsOut: 1, isStable: false }
+    { stack: undefined, callsOut: 0 }
   );
 
-  return <Provider value={[state, dispatch]}>{children}</Provider>;
+  const derivedState = {
+    ...state,
+    bigLoad: state.stack === undefined,
+    littleLoad: state.callsOut > 0,
+  };
+
+  return <Provider value={[derivedState, dispatch]}>{children}</Provider>;
 };

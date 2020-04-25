@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ShowCardOperationsBar } from "./shared/ShowCardOperationsBar";
 import { ShowCardInformation } from "./ShowCard/ShowCardInformation";
 
-export const ShowCard = ({}) => {
+export const ShowCard = ({ show }) => {
   const [cardIsHovered, setCardIsHovered] = useState(false);
 
   return (
@@ -19,10 +19,13 @@ export const ShowCard = ({}) => {
         >
           <img
             className="z-20 object-cover min-w-full min-h-full"
-            src="https://image.tmdb.org/t/p/original/xBHvZcjRiWyobQ9kxBhO6B2dtRI.jpg"
+            src={
+              show.img ??
+              "https://i.pinimg.com/originals/76/92/79/76927939ad6134c1b5b0fa472803ca4b.png"
+            }
           />
         </div>
-        <ShowCardInformation />
+        <ShowCardInformation show={show} />
       </div>
       <div className="mt-6 md:hidden lg:block">
         <ShowCardOperationsBar />

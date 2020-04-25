@@ -4,6 +4,11 @@ import "../public/tailwind.css";
 import "loaders.css";
 import { Header } from "../components/Header";
 import { ModalsStackProvider } from "../contexts/ModalsStackContext";
+import { StackProvider } from "../contexts/StackContext";
+import { NotificationsProvider } from "../contexts/NotificationsContext";
+import { Notifications } from "../components/Notifications";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "../gql/client";
 
 const staticProps = {
   header: {
@@ -24,14 +29,21 @@ export default ({ Component, pageProps }) => {
           height: 100%;
         }
       `}</style>
-      <ModalsStackProvider>
-        <div className="flex flex-col w-full h-full bg-white">
-          <Header {...staticProps.header} />
-          <div className="relative flex flex-col flex-1 w-full">
-            <Component {...pageProps} />
-          </div>
-        </div>
-      </ModalsStackProvider>
+      <ApolloProvider client={client}>
+        <NotificationsProvider>
+          <StackProvider>
+            <ModalsStackProvider>
+              <div className="flex flex-col w-full h-full bg-white">
+                <Header {...staticProps.header} />
+                <div className="relative flex flex-col flex-1 w-full">
+                  <Component {...pageProps} />
+                </div>
+                <Notifications />
+              </div>
+            </ModalsStackProvider>
+          </StackProvider>
+        </NotificationsProvider>
+      </ApolloProvider>
     </>
   );
 };

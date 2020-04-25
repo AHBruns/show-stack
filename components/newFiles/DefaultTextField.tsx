@@ -9,6 +9,7 @@ export interface IDefaultTextField {
   onChange: (any) => void;
   onBlur: (any) => void;
   placeholder: string;
+  value: any;
 }
 
 export const DefaultTextField = ({
@@ -20,6 +21,7 @@ export const DefaultTextField = ({
   onChange,
   onBlur,
   placeholder,
+  value,
 }: IDefaultTextField) => {
   return (
     <div className={`${mt ? "mt-4" : ""}`}>
@@ -38,6 +40,7 @@ export const DefaultTextField = ({
           onChange={onChange}
           onBlur={onBlur}
           placeholder={placeholder}
+          value={value}
         />
       </div>
     </div>

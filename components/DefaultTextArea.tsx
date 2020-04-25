@@ -9,6 +9,7 @@ export interface IDefaultTextArea {
   onChange: (any) => void;
   onBlur: (any) => void;
   placeholder: string;
+  value: any;
 }
 
 export const DefaultTextArea = ({
@@ -20,6 +21,7 @@ export const DefaultTextArea = ({
   onChange,
   onBlur,
   placeholder,
+  value,
 }: IDefaultTextArea) => {
   return (
     <div className={`${mt ? "mt-4" : ""}`}>
@@ -39,6 +41,7 @@ export const DefaultTextArea = ({
           onBlur={onBlur}
           className="block w-full mt-1 transition duration-150 ease-in-out focus:shadow-outline-gray focus:border-gray-500 form-textarea sm:text-sm sm:leading-5"
           placeholder={placeholder}
+          value={value}
         />
       </div>
     </div>

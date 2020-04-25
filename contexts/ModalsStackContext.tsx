@@ -18,8 +18,8 @@ export const modalNames = {
 };
 
 const modalRegistry = {
-  [modalNames.CREATE_A_STACK]: <CreateAStackModal />, // replace with actual modal
-  [modalNames.ADD_A_SHOW]: <AddAShowModal />, // replace with actual modal
+  [modalNames.CREATE_A_STACK]: (key) => <CreateAStackModal key={key} />,
+  [modalNames.ADD_A_SHOW]: (key) => <AddAShowModal key={key} />,
 };
 
 export const actions = {
@@ -40,6 +40,7 @@ export const ModalsStackProvider = ({ children }) => {
       case actionTypes.PUSH:
         return [...state, action.payload];
       default:
+        alert(JSON.stringify(action, null, 2));
         throw new Error("unknown modals stack action");
     }
   }, []);
@@ -47,7 +48,7 @@ export const ModalsStackProvider = ({ children }) => {
   return (
     <Provider value={[state, dispatch]}>
       {children}
-      {state.map((modalName) => modalRegistry[modalName])}
+      {state.map((modalName, index) => modalRegistry[modalName](index))}
     </Provider>
   );
 };

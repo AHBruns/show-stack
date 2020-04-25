@@ -12,7 +12,9 @@ export const PrimaryOperationsMenu = () => {
           if (menuIsOpen) setMenuIsOpen(false);
         }}
         className={`absolute inset-0 ${
-          menuIsOpen ? "pointer-events-auto" : "pointer-events-none"
+          menuIsOpen
+            ? "pointer-events-auto bg-gray-900 opacity-50"
+            : "pointer-events-none"
         }`}
       />
       <div className="absolute inset-0 z-20 flex flex-col justify-end overflow-hidden pointer-events-none">
