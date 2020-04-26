@@ -22,6 +22,7 @@ export const DefaultTextField = ({
   onBlur,
   placeholder,
   value,
+  ...otherProps
 }: IDefaultTextField) => {
   return (
     <div className={`${mt ? "mt-4" : ""}`}>
@@ -41,6 +42,7 @@ export const DefaultTextField = ({
           onBlur={onBlur}
           placeholder={placeholder}
           value={value}
+          {...otherProps}
         />
       </div>
     </div>

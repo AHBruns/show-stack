@@ -3,7 +3,7 @@ import Loader from "react-loaders";
 
 export const Spinner = () => {
   return (
-    <div className="relative w-20 h-20">
+    <div className="relative">
       <Loader type="square-spin" active />
     </div>
   );

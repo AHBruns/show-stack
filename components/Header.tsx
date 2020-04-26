@@ -1,13 +1,22 @@
 import React from "react";
 import { NavItem } from "./Header/NavItem";
+import UserContext from "../contexts/User.context";
 
 export const Header = ({ hideOn }) => {
+  const [userState, userDispatch, userOperations] = React.useContext(
+    UserContext
+  );
   const content = (
     <nav className="z-40 w-full bg-white border-b border-gray-200 shadow-2xl">
       <ul className="z-40 flex flex-wrap items-center justify-center w-full h-full p-2">
         <NavItem name="Home" href="/" />
         <NavItem selected name="Dashboard" href="/dashboard" />
         <NavItem name="Settings" href="/settings" />
+        <NavItem
+          name="Logout"
+          href="/"
+          onClick={userOperations.clearLocalStorage}
+        />
       </ul>
     </nav>
   );

@@ -5,15 +5,17 @@ export interface INavItemProps {
   selected?: boolean;
   name: string;
   href: string;
+  onClick?: () => void;
 }
 
-export const NavItem = ({ selected, name, href }: INavItemProps) => (
+export const NavItem = ({ selected, name, href, onClick }: INavItemProps) => (
   <Link href={href}>
     <a
       className="z-40 text-xl font-thin tracking-wider cursor-pointer"
       href={href}
     >
       <li
+        onClick={onClick}
         className={`z-40 px-4 py-2 m-2 transition-all duration-300 ease-in-out transform border ${
           selected ? "border-gray-200" : "border-transparent"
         } rounded-lg hover:border-gray-300 hover:shadow-lg hover:scale-105`}

@@ -17,8 +17,9 @@ export const ShowsLayout = () => {
   const [NotificationsState, notificationsDispatch] = React.useContext(
     NotificationContext
   );
+
   const { error, data } = useQuery(GET_STACK, {
-    variables: { pk: 2 },
+    variables: { pk: stackState.id },
   });
 
   React.useEffect(() => {
