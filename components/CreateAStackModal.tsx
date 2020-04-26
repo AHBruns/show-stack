@@ -1,9 +1,9 @@
 import React from "react";
 import { ModalLayout } from "./shared/ModalLayout";
 import { Formik, Form } from "formik"; // cspell:words Formik
-import { DefaultTextField } from "./newFiles/DefaultTextField";
+import { DefaultTextField } from "./shared/DefaultTextField";
 import { ModalsStackContext, actions } from "../contexts/ModalsStackContext";
-import { ModalDuoButton } from "./newFiles/ModalDuoButton";
+import { ModalDuoButton } from "./shared/ModalDuoButton";
 
 export const CreateAStackModal = () => {
   const [_, dispatch] = React.useContext(ModalsStackContext);

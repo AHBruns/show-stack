@@ -1,13 +1,13 @@
 import React from "react";
 import { ModalLayout } from "./shared/ModalLayout";
 import { Formik, Form, Field } from "formik"; // cspell:words Formik
-import { DefaultTextField } from "./newFiles/DefaultTextField";
-import { Badge } from "./newFiles/Badge";
-import { ModalDuoButton } from "./newFiles/ModalDuoButton";
+import { DefaultTextField } from "./shared/DefaultTextField";
+import { Badge } from "./AddAShowModal/Badge";
+import { ModalDuoButton } from "./shared/ModalDuoButton";
 import { ModalsStackContext, actions } from "../contexts/ModalsStackContext";
 import { search } from "../utils/tmdb"; // cspell:words TMDB
-import { Spinner } from "./Spinner";
-import { DefaultTextArea } from "./DefaultTextArea";
+import { Spinner } from "./AddAShowModal/Spinner";
+import { DefaultTextArea } from "./AddAShowModal/DefaultTextArea";
 import {
   StackContext,
   actions as stackActions,
@@ -213,6 +213,15 @@ export const AddAShowModal = () => {
                     }}
                   />
                 </div>
+                {/* <div
+                  className={`transition-all duration-1000 ease-in-out ${
+                    stackState.callsOut > 0
+                      ? "h-65 opacity-100"
+                      : "h-0 opacity-0"
+                  }`}
+                >
+                  <Spinner />
+                </div> */}
               </Form>
             )}
           </Formik>

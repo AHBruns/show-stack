@@ -79,8 +79,6 @@ export const NotificationsProvider = ({ children }) => {
   );
   const simpleState = state.map((item) => item.notificationName);
 
-  console.log(simpleState);
-
   return (
     <Provider value={[simpleState, dispatch, notifications]}>
       {children}

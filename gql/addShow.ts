@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 // cspell:words bigint
 export const ADD_SHOW = gql`
-  mutation AddShow(
+  mutation ADD_SHOW(
     $img: String
     $description: String
     $title: String

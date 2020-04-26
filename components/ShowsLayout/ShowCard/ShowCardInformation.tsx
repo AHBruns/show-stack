@@ -5,7 +5,7 @@ import { ShowCardTagsBar } from "./ShowCardInformation/ShowCardTagsBar";
 const description =
   "The near future, a time when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon menaces to destroy life on planet Earth, astronaut Roy McBride undertakes a mission across the immensity of space and its many perils to uncover the truth about a lost expedition that decades before boldly faced emptiness and silence in search of the unknown.";
 
-export const ShowCardInformation = ({ show }) => {
+export const ShowCardInformation = ({ index, show }) => {
   return (
     <div className="flex flex-col self-stretch flex-1 max-h-full pl-6 lg:pl-0 xl:pl-6 lg:mt-6 xl:mt-0">
       <h1 className="text-3xl font-bold leading-tight tracking-wider text-gray-900">
@@ -22,7 +22,7 @@ export const ShowCardInformation = ({ show }) => {
           : show.description}
       </p>
       <div className="hidden block mt-6 md:block lg:hidden">
-        <ShowCardOperationsBar />
+        <ShowCardOperationsBar index={index} />
       </div>
     </div>
   );

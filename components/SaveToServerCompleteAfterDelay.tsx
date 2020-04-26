@@ -1,6 +1,6 @@
 import React from "react";
 import { NotificationContext, actions } from "../contexts/NotificationsContext";
-import { NotificationLayout } from "./NotificationLayout";
+import { NotificationLayout } from "./shared/NotificationLayout";
 
 export const SaveToServerCompleteAfterDelay = ({ name, autoClearTime }) => {
   const [state, dispatch] = React.useContext(NotificationContext);

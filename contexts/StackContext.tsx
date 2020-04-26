@@ -2,6 +2,7 @@ import React from "react";
 import { IAction } from "../types/IAction";
 import { client } from "../gql/client";
 import { ADD_SHOW } from "../gql/addShow";
+import { REMOVE_SHOW } from "../gql/removeShow";
 
 export const StackContext = React.createContext([]);
 
@@ -11,7 +12,6 @@ const { Provider } = StackContext;
 const sideEffects = {
   ADD: async (payload, state, dispatch) => {
     dispatch(actions.INC_CALLS());
-    console.log(state);
     client
       .mutate({
         mutation: ADD_SHOW,
@@ -20,27 +20,29 @@ const sideEffects = {
           stack_id: state.id,
         },
       })
-      .then((result) => console.log(result))
+      .then((result) => {
+        dispatch(
+          actions.LOCAL_UPDATE({
+            index: state.stack.length,
+            show: result.data.insert_show.returning[0],
+          })
+        );
+      })
       .then(() => dispatch(actions.DEC_CALLS()));
   },
   REMOVE: async (payload, state, dispatch) => {
     dispatch(actions.INC_CALLS());
-    // alert(
-    //   "FETCH: REMOVE, " +
-    //     JSON.stringify(state, null, 2) +
-    //     ", " +
-    //     JSON.stringify(payload, null, 2)
-    // );
-    setTimeout(() => dispatch(actions.DEC_CALLS()), 1000);
+    client
+      .mutate({
+        mutation: REMOVE_SHOW,
+        variables: {
+          id: state.stack[payload].id,
+        },
+      })
+      .then(() => dispatch(actions.DEC_CALLS()));
   },
   UPDATE: async (payload, state, dispatch) => {
     dispatch(actions.INC_CALLS());
-    // alert(
-    //   "FETCH: UPDATE, " +
-    //     JSON.stringify(state, null, 2) +
-    //     ", " +
-    //     JSON.stringify(payload, null, 2)
-    // );
     setTimeout(() => dispatch(actions.DEC_CALLS()), 1000);
   },
 };
@@ -70,6 +72,9 @@ export const actions = {
     sideEffects.ADD(payload, state, dispatch);
     return { type: actionTypes.ADD, payload };
   },
+  LOCAL_ADD: (payload: any) => {
+    return { type: actionTypes.ADD, payload };
+  },
   // remove a show by index from the stack
   REMOVE: (payload: any, state: IState, dispatch: React.Dispatch<IAction>) => {
     sideEffects.REMOVE(payload, state, dispatch);
@@ -81,6 +86,12 @@ export const actions = {
   // replace a show at a given index with a different show (update)
   UPDATE: (payload: any, state: IState, dispatch: React.Dispatch<IAction>) => {
     sideEffects.UPDATE(payload, state, dispatch);
+    return {
+      type: actionTypes.UPDATE,
+      payload,
+    };
+  },
+  LOCAL_UPDATE: (payload: any) => {
     return {
       type: actionTypes.UPDATE,
       payload,
@@ -130,7 +141,11 @@ export const StackProvider = ({ children }) => {
         }
         case actionTypes.UPDATE: {
           const stack = [...state.stack];
-          stack[action.payload.index] = action.payload.show;
+          if (action.payload.index < stack.length)
+            stack[action.payload.index] = action.payload.show;
+          else if (action.payload.index === stack.length) {
+            stack.push(action.payload.show); // little help so UPDATE can also be used for append
+          }
           return {
             ...state,
             stack,
