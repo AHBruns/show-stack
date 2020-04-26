@@ -38,10 +38,10 @@ export const Login = () => {
     if (loading) {
       userDispatch({ type: EActionType.LOGGING_IN });
       log("login", "Attempting to login with user provided credentials.");
-    } else if (data?.user?.length !== 1) {
+    } else if (data?.user?.length !== 1 && data) {
       userDispatch({ type: EActionType.LOGIN_FAILED });
       log("login", "Login attempt failed.");
-    } else {
+    } else if (data) {
       log("login", "Login attempt succeeded.");
       const user = data.user[0];
       userDispatch({ type: EActionType.LOGIN_SUCCESS, user });
