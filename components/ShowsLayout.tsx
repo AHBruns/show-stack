@@ -70,9 +70,11 @@ export const ShowsLayout = () => {
     return (
       <>
         <div className="grid grid-cols-1 gap-12 p-12 lg:grid-cols-2">
-          {stackState.stack.reverse().map((show, index) => (
-            <ShowCard index={index} key={index} show={show} />
-          ))}
+          {stackState.stack
+            .map((show, index) => (
+              <ShowCard index={index} key={index} show={show} />
+            ))
+            .reverse()}
         </div>
       </>
     );
