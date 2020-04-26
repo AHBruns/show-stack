@@ -26,7 +26,10 @@ export const Login = () => {
 
   React.useEffect(() => {
     userOperations.attemptLoggingInFromLocalStorage(
-      () => router.push("/dashboard"),
+      (user) => {
+        stackDispatch(stackActions.SET_ID(user.stack.id));
+        router.push("/dashboard");
+      },
       () =>
         log(
           "login",

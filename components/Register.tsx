@@ -50,7 +50,7 @@ export const Register = () => {
               />
               <ErrorMessage name="email">
                 {(errorMessage) => (
-                  <div className="px-4 py-2 mt-4 text-sm text-red-700 bg-red-300 border border-red-500 rounded-lg shadow-md font-sm">
+                  <div className="px-4 py-2 mt-4 text-sm text-red-700 bg-red-300 border border-red-500 rounded-md shadow-md font-sm">
                     {errorMessage}
                   </div>
                 )}
