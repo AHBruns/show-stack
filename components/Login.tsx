@@ -22,6 +22,8 @@ export const Login = () => {
   const [_, stackDispatch] = React.useContext(StackContext);
   const [getUser, { loading, data, called, refetch }] = useLazyQuery(GET_USER);
 
+  console.log(loading);
+
   React.useEffect(() => {
     userOperations.attemptLoggingInFromLocalStorage(
       () => router.push("/dashboard"),
@@ -54,7 +56,7 @@ export const Login = () => {
   }, [loading, data]);
 
   return (
-    <div className="relative w-full max-w-sm px-4 py-6 m-4 bg-white border-gray-300 rounded-lg shadow-lg">
+    <div className="relative w-full max-w-sm px-4 py-6 m-4 overflow-hidden bg-white border-gray-300 rounded-lg shadow-lg">
       <h1 className="text-4xl font-semibold text-center text-gray-900">
         Login
       </h1>
@@ -92,12 +94,8 @@ export const Login = () => {
                   value={values.password}
                 />
               </div>
-              {data?.user?.length === 0 && (
-                <div
-                  className={`px-4 py-2 mt-4 text-sm text-red-700 bg-red-300 border border-red-500 rounded-lg shadow-md font-sm transition-all ease-in-out duration-300 ${
-                    loading ? "opacity-0" : "opacity-100"
-                  }`}
-                >
+              {data?.user?.length === 0 && !loading && (
+                <div className="px-4 py-2 mt-4 text-sm text-red-700 transition-all duration-300 ease-in-out bg-red-300 border border-red-500 rounded-md shadow-md font-sm">
                   An incorrect email and/or password was provided.
                 </div>
               )}
@@ -124,11 +122,11 @@ export const Login = () => {
         </div>
       </div>
       <div
-        className={`transition-all duration-1000 ease-in-out delay-1000 ${
+        className={`transition-all ease-in-out duration-300 ${
           loading ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="absolute inset-0 transition-all duration-300 ease-in-out bg-white opacity-50 delay-1000" />
+        <div className="absolute inset-0 bg-white opacity-50" />
         <div className="absolute inset-0 flex items-center justify-center">
           <Spinner />
         </div>
