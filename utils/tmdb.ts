@@ -1,4 +1,5 @@
-import { accessTokenTMDB } from "./tmdb/keys"; // cspell:words TMDB
+// cspell:words TMDB
+import { accessTokenTMDB } from "./tmdb/keys";
 import { BaseTMDB, MultiSearchTMDB } from "./tmdb/urlSnippets";
 
 export const search = async (searchString: string) => {

@@ -1,6 +1,7 @@
 import React from "react";
 import { ModalLayout } from "./shared/ModalLayout";
-import { Formik, Form } from "formik"; // cspell:words Formik
+// cspell:words Formik
+import { Formik, Form } from "formik";
 import { DefaultTextField } from "./shared/DefaultTextField";
 import { ModalsStackContext, actions } from "../contexts/ModalsStackContext";
 import { ModalDuoButton } from "./shared/ModalDuoButton";

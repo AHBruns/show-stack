@@ -1,11 +1,13 @@
 import React from "react";
 import { ModalLayout } from "./shared/ModalLayout";
-import { Formik, Form, Field } from "formik"; // cspell:words Formik
+// cspell:words Formik
+import { Formik, Form, Field } from "formik";
 import { DefaultTextField } from "./shared/DefaultTextField";
 import { Badge } from "./AddAShowModal/Badge";
 import { ModalDuoButton } from "./shared/ModalDuoButton";
 import { ModalsStackContext, actions } from "../contexts/ModalsStackContext";
-import { search } from "../utils/tmdb"; // cspell:words TMDB
+// cspell:words TMDB
+import { search } from "../utils/tmdb";
 import { Spinner } from "./AddAShowModal/Spinner";
 import { DefaultTextArea } from "./AddAShowModal/DefaultTextArea";
 import {
