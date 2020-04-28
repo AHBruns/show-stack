@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 // cspell:words bigint
-export const ADD_SHOW = gql`
+export const ADD_SHOW = `
   mutation ADD_SHOW(
     $img: String
     $description: String
