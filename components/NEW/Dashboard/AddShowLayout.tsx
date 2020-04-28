@@ -1,6 +1,6 @@
 import React from "react";
-import { AddShowButton } from "./AddShowButton";
-import { AddShowModal } from "./AddShowModal";
+import { AddShowButton } from "./AddShowLayout/AddShowButton";
+import { AddShowModal } from "./AddShowLayout/AddShowModal";
 
 const ModalAndBackground = ({
     stackID,

@@ -1,8 +1,8 @@
 import React from "react";
-import { OperationButton } from "./OperationButton";
+import { OperationButton } from "../ShowCard/ShowCardOperationsBar/OperationButton";
 import useSWR, { mutate } from "swr";
-import { REMOVE_SHOW } from "../../gql/removeShow";
-import { EType } from "../../utils/fetcher";
+import { REMOVE_SHOW } from "../../../../../gql/removeShow";
+import { EType } from "../../../../../utils/fetcher";
 
 export const ShowCardOperationsBar = ({ invalidateOnShowsMutation, show }) => {
     const [attemptToRemove, setAttemptToRemove] = React.useState(false);

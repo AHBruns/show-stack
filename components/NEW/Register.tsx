@@ -1,9 +1,9 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Input } from "./Input";
-import { Button } from "./Button";
+import { Input } from "./shared/Input";
+import { Button } from "./shared/Button";
 import { ADD_USER } from "../../gql/addUser";
-import { OrBreakline } from "./OrBreakline";
+import { OrBreakline } from "./shared/OrBreakline";
 import useSWR from "swr";
 import { EType } from "../../utils/fetcher";
 

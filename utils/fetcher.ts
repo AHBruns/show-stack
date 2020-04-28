@@ -1,5 +1,5 @@
 import { GraphQLClient } from "graphql-request";
-import { search } from "./tmdb";
+import { search } from "./fetcher/tmdb";
 
 export enum EType {
     LOCAL_STORAGE,

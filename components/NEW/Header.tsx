@@ -1,5 +1,5 @@
 import React from "react";
-import { NavItem } from "./NavItem";
+import { NavItem } from "./Header/NavItem";
 import UserContext from "../../contexts/User.context";
 import { useRouter } from "next/router";
 

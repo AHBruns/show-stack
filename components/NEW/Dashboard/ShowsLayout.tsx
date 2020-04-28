@@ -1,5 +1,5 @@
 import React from "react";
-import { ShowCard } from "./ShowCard";
+import { ShowCard } from "./ShowsLayout/ShowCard";
 
 const MemoizedShowCard = React.memo(ShowCard);
 

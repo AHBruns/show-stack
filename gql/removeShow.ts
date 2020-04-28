@@ -1,5 +1,3 @@
-import { gql } from "@apollo/client";
-
 // cspell:words bigint
 export const REMOVE_SHOW = `
   mutation REMOVE_SHOW($id: bigint!) {

@@ -4,8 +4,8 @@ import UserContext from "../../contexts/User.context";
 import { EType as EFetchType } from "../../utils/fetcher";
 import { GET_USER_STACK } from "../../gql/getUserStack";
 import { useRestoreUserOrRedirect } from "../../hooks/useRestorUserOrRedirect";
-import { ShowsLayout } from "./ShowsLayout";
-import { AddShowLayout } from "./AddShowLayout";
+import { ShowsLayout } from "./Dashboard/ShowsLayout";
+import { AddShowLayout } from "./Dashboard/AddShowLayout";
 
 export const Dashboard = () => {
     const [userState] = React.useContext(UserContext);

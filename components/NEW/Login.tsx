@@ -1,13 +1,13 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Input } from "./Input";
-import { Button } from "./Button";
+import { Input } from "./shared/Input";
+import { Button } from "./shared/Button";
 import {
     UserContext,
     EActionType as EUserActionType,
 } from "../../contexts/User.context";
 import { GET_USER } from "../../gql/getUser";
-import { OrBreakline } from "./OrBreakline";
+import { OrBreakline } from "./shared/OrBreakline";
 import useSWR from "swr";
 import { EType } from "../../utils/fetcher";
 

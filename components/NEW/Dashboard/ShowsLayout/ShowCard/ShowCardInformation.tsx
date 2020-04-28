@@ -1,6 +1,6 @@
 import React from "react";
-import { ShowCardOperationsBar } from "./ShowCardOperationsBar";
-import { ShowCardTagsBar } from "./ShowCardTagsBar";
+import { ShowCardOperationsBar } from "../shared/ShowCardOperationsBar";
+import { ShowCardTagsBar } from "./ShowCardInformation/ShowCardTagsBar";
 
 export const ShowCardInformation = ({ invalidateOnShowsMutation, show }) => {
     const [descriptionIsOpen, setDescriptionIsOpen] = React.useState(false);

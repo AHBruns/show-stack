@@ -1,11 +1,11 @@
 import React from "react";
-import { Input } from "./Input";
-import { TextField } from "./TextField";
-import { Button } from "./Button";
+import { Input } from "../../shared/Input";
+import { TextField } from "./AddShowModal/TextField";
+import { Button } from "../../shared/Button";
 import useSWR, { mutate } from "swr";
-import { EType } from "../../utils/fetcher";
-import { Badge } from "./Badge";
-import { ADD_SHOW } from "../../gql/addShow";
+import { EType } from "../../../../utils/fetcher";
+import { Badge } from "./AddShowModal/Badge";
+import { ADD_SHOW } from "../../../../gql/addShow";
 
 export const AddShowModal = ({
     stackID,

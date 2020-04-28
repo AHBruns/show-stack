@@ -1,5 +1,3 @@
-import { gql } from "@apollo/client";
-
 export const GET_USER_STACK = `
   query GET_USER_STACK($id: bigint!) {
     user_by_pk(id: $id) {

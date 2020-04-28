@@ -1,5 +1,3 @@
-import { gql } from "@apollo/client";
-
 // cspell:words bigint
 export const ADD_SHOW = `
   mutation ADD_SHOW(
