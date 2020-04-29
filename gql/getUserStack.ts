@@ -11,6 +11,7 @@ export const GET_USER_STACK = `
           stack_id
           tags
           title
+          genres
         }
       }
     }

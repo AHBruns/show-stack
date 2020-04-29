@@ -1,6 +1,6 @@
 import React from "react";
 
-export const localStorageKey = "USER_CREDENTIALS";
+const localStorageKey = "USER_CREDENTIALS";
 
 export const UserContext = React.createContext(undefined);
 UserContext.displayName = "User";

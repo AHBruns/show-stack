@@ -1,5 +1,5 @@
 import React from "react";
-import { OperationButton } from "../ShowCard/ShowCardOperationsBar/OperationButton";
+import { OperationButton } from "../../shared/OperationButton";
 import useSWR, { mutate } from "swr";
 import { REMOVE_SHOW } from "../../../../../gql/removeShow";
 import { EType } from "../../../../../utils/fetcher";

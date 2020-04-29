@@ -5,6 +5,7 @@ export const ADD_SHOW = `
     $description: String
     $title: String
     $tags: String
+    $genres: String
     $stack_id: bigint!
   ) {
     insert_show(
@@ -14,6 +15,7 @@ export const ADD_SHOW = `
         title: $title
         tags: $tags
         stack_id: $stack_id
+        genres: $genres
       }
     ) {
       returning {
@@ -22,6 +24,7 @@ export const ADD_SHOW = `
         title
         description
         img
+        genres
         stack_id
       }
     }

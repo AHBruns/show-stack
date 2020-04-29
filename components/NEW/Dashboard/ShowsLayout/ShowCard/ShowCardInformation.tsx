@@ -2,12 +2,16 @@ import React from "react";
 import { ShowCardOperationsBar } from "../shared/ShowCardOperationsBar";
 import { ShowCardTagsBar } from "./ShowCardInformation/ShowCardTagsBar";
 
-export const ShowCardInformation = ({ invalidateOnShowsMutation, show }) => {
+export const ShowCardInformation = ({
+    posterThrewError,
+    invalidateOnShowsMutation,
+    show,
+}) => {
     const [descriptionIsOpen, setDescriptionIsOpen] = React.useState(false);
     return (
         <div
             className={`flex flex-col flex-1 h-full pl-0 ${
-                show.img ? "sm:pl-6 lg:pl-0 xl:pl-6" : ""
+                show.img && !posterThrewError ? "sm:pl-6 lg:pl-0 xl:pl-6" : ""
             } lg:mt-6 xl:mt-0`}
         >
             <h1 className="text-xl font-bold leading-tight tracking-wider text-gray-900 sm:text-3xl ">

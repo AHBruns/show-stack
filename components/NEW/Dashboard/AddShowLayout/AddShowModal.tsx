@@ -6,18 +6,18 @@ import useSWR, { mutate } from "swr";
 import { EType } from "../../../../utils/fetcher";
 import { Badge } from "./AddShowModal/Badge";
 import { ADD_SHOW } from "../../../../gql/addShow";
+import { TMDBContext } from "../../../../contexts/TMDB.context";
 
 export const AddShowModal = ({
     stackID,
     onClose,
     invalidateOnShowsMutation,
 }) => {
+    const { televisionGenres, movieGenres } = React.useContext(TMDBContext);
+
     const [attemptToAddShow, setAttemptToAddShow] = React.useState(false);
 
-    const [imgSelected, setImgSelected]: [
-        string,
-        (string) => void
-    ] = React.useState();
+    const [imgSelected, setImgSelected] = React.useState();
 
     const [formValues, setFormValues] = React.useState({
         title: "",
@@ -27,19 +27,43 @@ export const AddShowModal = ({
 
     const { data } = useSWR([EType.TMDB_SEARCH, formValues.title]);
 
-    const swrArgs = React.useMemo(
-        () => [
+    const swrArgs = React.useMemo(() => {
+        console.log(imgSelected, televisionGenres, movieGenres);
+        return [
             EType.HASURA_GRAPHQL,
             ADD_SHOW,
-            ["img", "description", "title", "tags", "stack_id"],
-            imgSelected,
+            ["img", "description", "title", "tags", "stack_id", "genres"],
+            imgSelected
+                ? `https://image.tmdb.org/t/p/w780${
+                      (imgSelected as { poster_path: string }).poster_path
+                  }`
+                : undefined,
             formValues.description,
             formValues.title,
             formValues.tags,
             stackID,
-        ],
-        [formValues, stackID]
-    );
+            (imgSelected as { media_type: string })?.media_type === "tv"
+                ? (imgSelected as { genre_ids: number[] })?.genre_ids
+                      .map(
+                          (id) =>
+                              (televisionGenres as any)?.filter(
+                                  (pair) => pair.id === id
+                              )?.[0]?.name
+                      )
+                      .join(", ")
+                : (imgSelected as { media_type: string })?.media_type ===
+                  "movie"
+                ? (imgSelected as { genre_ids: number[] })?.genre_ids
+                      .map(
+                          (id) =>
+                              (movieGenres as any)?.filter(
+                                  (pair) => pair.id === id
+                              )?.[0]?.name
+                      )
+                      .join(", ")
+                : undefined,
+        ];
+    }, [formValues, stackID, imgSelected, televisionGenres, movieGenres]);
     const { isValidating } = useSWR(attemptToAddShow ? swrArgs : null, {
         onSuccess() {
             mutate(invalidateOnShowsMutation);
@@ -102,12 +126,12 @@ export const AddShowModal = ({
                                                 result.original_title,
                                             description: result.overview,
                                         });
-                                        setImgSelected(
-                                            `https://image.tmdb.org/t/p/original${result.poster_path}`
-                                        );
+                                        setImgSelected(result);
+                                        //     `https://image.tmdb.org/t/p/w780${result.poster_path}`
+                                        // );
                                     }}
                                     className="h-56 ml-4"
-                                    src={`https://image.tmdb.org/t/p/original${result.poster_path}`}
+                                    src={`https://image.tmdb.org/t/p/w780${result.poster_path}`}
                                 />
                             ))}
                         <div className="w-full h-full px-2 max-w-4" />
