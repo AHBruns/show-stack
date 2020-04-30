@@ -35,7 +35,6 @@ export const ShowCard = ({
                     />
                 </div>
             </div>
-            {/* <div className="flex-1" /> */}
             <div className="mt-3 sm:mt-6 md:hidden lg:block">
                 <ShowCardOperationsBar
                     invalidateOnShowsMutation={invalidateOnShowsMutation}

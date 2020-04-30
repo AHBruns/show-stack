@@ -12,6 +12,7 @@ export const GET_USER_STACK = `
           tags
           title
           genres
+          watched
         }
       }
     }

@@ -59,7 +59,9 @@ export const Dashboard = () => {
                 imgError={imgError}
                 setImgError={setImgError}
                 genresToShow={genresToShow}
-                showsData={data.user_by_pk.stack.shows}
+                showsData={data.user_by_pk.stack.shows.filter(
+                    (show) => !show.watched
+                )}
                 invalidateOnShowsMutation={swrArgs}
             />
             <FilterLayout

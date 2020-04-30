@@ -6,17 +6,17 @@ export const TMDBContext = React.createContext(undefined);
 
 export const TMDBProvider = ({ children }) => {
     const { data: televisionGenres, error: tvError } = useSWR(
-        [EType.TMDB_TV_GENRES, true],
+        [EType.TMDB_TV_GENRES],
         fetcher
     );
 
     const { data: movieGenres, error: movieError } = useSWR(
-        [EType.TMDB_MOVIE_GENRES, true],
+        [EType.TMDB_MOVIE_GENRES],
         fetcher
     );
 
     const { data: config, error: configError } = useSWR(
-        [EType.TMDB_CONFIG, true],
+        [EType.TMDB_CONFIG],
         fetcher
     );
 

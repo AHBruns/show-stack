@@ -57,9 +57,7 @@ export const ShowCardInformation = ({
             </h1>
             {(descriptionIsOpen || !show.img) && (
                 <p className="flex-1 block mt-2 text-sm tracking-wider text-gray-700 sm:hidden">
-                    {show.description.length > 322
-                        ? show.description.slice(0, 319).trim() + "..."
-                        : show.description}
+                    {show.description}
                 </p>
             )}
             {show.tags && (
@@ -68,9 +66,7 @@ export const ShowCardInformation = ({
                 </div>
             )}
             <p className="flex-1 hidden mt-2 text-sm tracking-wider text-gray-700 sm:block">
-                {show.description.length > 322
-                    ? show.description.slice(0, 319).trim() + "..."
-                    : show.description}
+                {show.description}
             </p>
             <div className="flex-1" />
             <div className="hidden block mt-6 md:block lg:hidden">

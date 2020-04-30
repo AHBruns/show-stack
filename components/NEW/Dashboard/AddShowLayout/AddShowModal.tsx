@@ -73,7 +73,7 @@ export const AddShowModal = ({
     });
 
     return (
-        <div className="w-full max-w-md p-6 bg-white rounded-lg pointer-events-auto">
+        <div className="w-full max-w-lg p-6 bg-white rounded-lg pointer-events-auto">
             <h1 className="text-4xl font-bold tracking-wider text-gray-900">
                 Add A Show
             </h1>
@@ -127,10 +127,8 @@ export const AddShowModal = ({
                                             description: result.overview,
                                         });
                                         setImgSelected(result);
-                                        //     `https://image.tmdb.org/t/p/w780${result.poster_path}`
-                                        // );
                                     }}
-                                    className="h-56 ml-4"
+                                    className="h-56 ml-4 transition-all duration-300 ease-in-out transform rounded-lg shadow-md cursor-pointer sm:hover:scale-105"
                                     src={`https://image.tmdb.org/t/p/w780${result.poster_path}`}
                                 />
                             ))}
