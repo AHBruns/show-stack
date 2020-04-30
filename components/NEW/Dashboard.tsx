@@ -12,7 +12,7 @@ const ImgErrorBanner = () => {
     const [useHidBanner, setUserHidBanner] = React.useState(false);
     if (useHidBanner) return null;
     return (
-        <div className="z-50 flex flex-col items-start justify-between w-full p-2 bg-red-300 shadow-2xl sm:items-center sm:flex-row space-x-0 sm:space-x-2 space-y-2 sm:space-y-0">
+        <div className="z-50 flex flex-col items-start justify-between w-full p-2 bg-red-300 shadow-2xl sm:items-center sm:flex-row">
             <h1 className="flex items-center justify-start flex-1 text-sm text-red-700">
                 ShowStack's images service is currently experiencing a large
                 outage. Until this outage is resolved some show posters may not
@@ -20,7 +20,7 @@ const ImgErrorBanner = () => {
             </h1>
             <button
                 onClick={() => setUserHidBanner(true)}
-                className="px-2 py-1 text-white bg-gray-900 rounded-lg shadow-md"
+                className="px-2 py-1 mt-2 text-white bg-gray-900 rounded-lg shadow-md sm:ml-2 sm:mt-0"
             >
                 Close
             </button>
