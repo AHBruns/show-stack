@@ -73,7 +73,7 @@ export const AddShowModal = ({
     });
 
     return (
-        <div className="w-full max-w-lg p-6 bg-white rounded-lg pointer-events-auto">
+        <div className="w-full max-w-lg p-6 m-6 bg-white rounded-lg pointer-events-auto">
             <h1 className="text-4xl font-bold tracking-wider text-gray-900">
                 Add A Show
             </h1>
