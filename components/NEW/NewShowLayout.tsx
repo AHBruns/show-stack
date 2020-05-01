@@ -498,7 +498,11 @@ const SMDetailsCard = ({ show, onClose, invalidateOnShowsMutation }) => {
                     <div className="flex flex-col w-full h-full overflow-hidden bg-white rounded-lg">
                         <div className="relative flex-1 h-full overflow-hidden">
                             {show.img ? (
-                                <img src={show.img} className="w-full" />
+                                <img
+                                    src={show.img}
+                                    className="absolute w-full transform shadow-inner scale-200"
+                                    style={{ filter: "blur(4vw)" }}
+                                />
                             ) : (
                                 <div className="absolute inset-0 flex items-center justify-center text-white bg-gray-600 shadow-inner">
                                     <svg
@@ -514,6 +518,14 @@ const SMDetailsCard = ({ show, onClose, invalidateOnShowsMutation }) => {
                                     </svg>
                                 </div>
                             )}
+                            <div className="absolute inset-0 p-3">
+                                <div className="flex items-center justify-center h-full">
+                                    <img
+                                        src={show.img}
+                                        className="h-full shadow-2xl"
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <div className="flex flex-col bg-white">
                             <div className="flex-1 m-4 sm:m-8">
