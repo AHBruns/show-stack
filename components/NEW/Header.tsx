@@ -9,8 +9,7 @@ export const Header = ({ hideOn }) => {
 
     const content = (
         <nav className="z-40 w-full bg-white border-b border-gray-200 shadow-2xl">
-            <ul className="z-40 flex items-center justify-start w-full h-full p-1 overflow-scroll sm:p-2 sm:justify-center sm:flex-wrap">
-                <NavItem selected name="Dashboard" href="/dashboard" />
+            <ul className="z-40 flex items-center justify-end w-full h-full p-1 overflow-scroll sm:p-2 sm:flex-wrap">
                 <NavItem
                     name="Logout"
                     href="/"

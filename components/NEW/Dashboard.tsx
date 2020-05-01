@@ -7,6 +7,10 @@ import { useRestoreUserOrRedirect } from "../../hooks/useRestorUserOrRedirect";
 import { ShowsLayout } from "./Dashboard/ShowsLayout";
 import { AddShowLayout } from "./Dashboard/AddShowLayout";
 import { FilterLayout } from "./Dashboard/FilterLayout";
+import { NewShowLayout } from "./NewShowLayout";
+
+const FEATURE_NEW_SHOWS_LAYOUT = true;
+const FEATURE_FILTERING = false;
 
 const ImgErrorBanner = () => {
     const [useHidBanner, setUserHidBanner] = React.useState(false);
@@ -55,20 +59,34 @@ export const Dashboard = () => {
     return (
         <>
             {imgError && <ImgErrorBanner />}
-            <ShowsLayout
-                imgError={imgError}
-                setImgError={setImgError}
-                genresToShow={genresToShow}
-                showsData={data.user_by_pk.stack.shows.filter(
-                    (show) => !show.watched
-                )}
-                invalidateOnShowsMutation={swrArgs}
-            />
-            <FilterLayout
-                genresToShow={genresToShow}
-                setGenresToShow={setGenresToShow}
-                showsData={data.user_by_pk.stack.shows}
-            />
+            {FEATURE_NEW_SHOWS_LAYOUT ? (
+                <NewShowLayout
+                    imgError={imgError}
+                    setImgError={setImgError}
+                    genresToShow={genresToShow}
+                    showsData={data.user_by_pk.stack.shows.filter(
+                        (show) => !show.watched
+                    )}
+                    invalidateOnShowsMutation={swrArgs}
+                />
+            ) : (
+                <ShowsLayout
+                    imgError={imgError}
+                    setImgError={setImgError}
+                    genresToShow={genresToShow}
+                    showsData={data.user_by_pk.stack.shows.filter(
+                        (show) => !show.watched
+                    )}
+                    invalidateOnShowsMutation={swrArgs}
+                />
+            )}
+            {FEATURE_FILTERING && (
+                <FilterLayout
+                    genresToShow={genresToShow}
+                    setGenresToShow={setGenresToShow}
+                    showsData={data.user_by_pk.stack.shows}
+                />
+            )}
             <AddShowLayout
                 stackID={data.user_by_pk.stack.id}
                 invalidateOnShowsMutation={swrArgs}

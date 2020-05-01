@@ -26,7 +26,7 @@ export const AddShowLayout = ({ stackID, invalidateOnShowsMutation }) => {
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     return (
-        <div className="fixed inset-0 z-50 pointer-events-none">
+        <div className="fixed inset-0 z-40 pointer-events-none">
             <div className="absolute left-4 bottom-4">
                 <AddShowButton onClick={() => setModalIsOpen(true)} />
             </div>

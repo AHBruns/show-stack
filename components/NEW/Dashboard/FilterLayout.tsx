@@ -9,6 +9,7 @@ export const FilterLayout = ({ genresToShow, setGenresToShow, showsData }) => {
 
     const genres = Array.from(
         showsData.reduce((acc, show) => {
+            if (!show.genre) return acc;
             show.genres
                 .split(",")
                 .map((genre) => genre.trim())
@@ -20,7 +21,7 @@ export const FilterLayout = ({ genresToShow, setGenresToShow, showsData }) => {
     );
 
     return (
-        <div className="fixed inset-0 z-50 pointer-events-none">
+        <div className="fixed inset-0 z-40 pointer-events-none">
             <div className="absolute flex flex-col items-end mt-4 ml-4 right-4 space-y-4 bottom-4">
                 <div
                     className={`py-1 text-gray-900 bg-white border border-gray-300 rounded-lg shadow-md pointer-events-auto w-32 ${
