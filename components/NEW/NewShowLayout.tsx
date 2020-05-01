@@ -206,8 +206,8 @@ const LGDetailsCard = ({ show, onClose, invalidateOnShowsMutation }) => {
         <>
             <DetailsCardBG show={show} />
             <div className="fixed inset-0 flex items-center justify-center">
-                <div className="w-full h-full p-12">
-                    <div className="flex items-stretch w-full h-full overflow-hidden rounded-lg shadow-2xl">
+                <div className="w-full h-full p-12 overflow-hidden">
+                    <div className="flex items-stretch w-full h-full rounded-lg shadow-2xl">
                         {show.img ? (
                             <img src={show.img} className="h-full" />
                         ) : (
@@ -348,7 +348,7 @@ const MDDetailsCard = ({ show, onClose, invalidateOnShowsMutation }) => {
         <>
             <DetailsCardBG show={show} />
             <div className="fixed inset-0 flex items-center justify-center">
-                <div className="w-full h-full p-12 overflow-auto">
+                <div className="w-full h-full p-12 overflow-hidden">
                     <div className="flex flex-col w-full h-full overflow-auto rounded-lg">
                         <div className="relative flex-1 h-full overflow-hidden bg-gray-500">
                             {show.img ? (
@@ -505,7 +505,7 @@ const SMDetailsCard = ({ show, onClose, invalidateOnShowsMutation }) => {
             <DetailsCardBG show={show} />
             <div className="fixed inset-0 flex items-center justify-center">
                 <div className="w-full h-full p-4 sm:p-6">
-                    <div className="flex flex-col w-full h-full overflow-auto bg-white rounded-lg">
+                    <div className="flex flex-col w-full h-full overflow-hidden bg-white rounded-lg">
                         <div className="relative flex-1 h-full overflow-hidden">
                             {show.img ? (
                                 <img src={show.img} className="w-full" />
