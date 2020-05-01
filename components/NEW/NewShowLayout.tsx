@@ -46,19 +46,9 @@ const useWatchedShow = (show, invalidateOnShowsMutation) => {
     return () => setAttemptToSetAsWatched(true);
 };
 
-const DetailsCardBG = ({ show }) => (
+const DetailsCardBG = () => (
     <div className="fixed inset-0 overflow-hidden opacity-75">
-        {show.img ? (
-            <div className="w-full h-full transform scale-125">
-                <img
-                    src={show.img}
-                    className="w-full h-full"
-                    style={{ filter: "blur(150px) grayscale(1) invert(1)" }}
-                />
-            </div>
-        ) : (
-            <div className="w-full h-full bg-gray-500" />
-        )}
+        <div className="w-full h-full bg-gray-500" />
     </div>
 );
 
@@ -69,7 +59,7 @@ const XLDetailsCard = ({ show, onClose, invalidateOnShowsMutation }) => {
     if (!show) return null;
     return (
         <>
-            <DetailsCardBG show={show} />
+            <DetailsCardBG />
             <div className="fixed inset-0 flex items-center justify-center">
                 <div className="flex w-2/3 rounded-md shadow-2xl h-2/3 bg-gray-50">
                     {show.img ? (
@@ -204,7 +194,7 @@ const LGDetailsCard = ({ show, onClose, invalidateOnShowsMutation }) => {
     if (!show) return null;
     return (
         <>
-            <DetailsCardBG show={show} />
+            <DetailsCardBG />
             <div className="fixed inset-0 flex items-center justify-center">
                 <div className="w-full h-full p-12 overflow-hidden">
                     <div className="flex items-stretch w-full h-full rounded-lg shadow-2xl">
@@ -346,7 +336,7 @@ const MDDetailsCard = ({ show, onClose, invalidateOnShowsMutation }) => {
     if (!show) return null;
     return (
         <>
-            <DetailsCardBG show={show} />
+            <DetailsCardBG />
             <div className="fixed inset-0 flex items-center justify-center">
                 <div className="w-full h-full p-12 overflow-hidden">
                     <div className="flex flex-col w-full h-full overflow-auto rounded-lg">
@@ -502,7 +492,7 @@ const SMDetailsCard = ({ show, onClose, invalidateOnShowsMutation }) => {
     if (!show) return null;
     return (
         <>
-            <DetailsCardBG show={show} />
+            <DetailsCardBG />
             <div className="fixed inset-0 flex items-center justify-center">
                 <div className="w-full h-full p-4 sm:p-6">
                     <div className="flex flex-col w-full h-full overflow-hidden bg-white rounded-lg">
