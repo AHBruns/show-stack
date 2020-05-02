@@ -12,7 +12,7 @@ const ModalAndBackground = ({
             onClick={() => setModalIsOpen(false)}
             className="absolute inset-0 bg-gray-900 opacity-50 pointer-events-auto"
         />
-        <div className="absolute inset-0 flex items-start justify-center max-h-full overflow-scroll">
+        <div className="absolute inset-0 flex items-center justify-center p-6 overflow-scroll">
             <AddShowModal
                 stackID={stackID}
                 onClose={() => setModalIsOpen(false)}
