@@ -9,11 +9,12 @@ export const FilterLayout = ({ genresToShow, setGenresToShow, showsData }) => {
 
     const genres = Array.from(
         showsData.reduce((acc, show) => {
-            if (!show.genre) return acc;
+            console.log(show);
+            if (!show.genres) return acc; // ignore genre-less things
             show.genres
                 .split(",")
                 .map((genre) => genre.trim())
-                .filter((genre) => genre !== "NONE")
+                .filter((genre) => genre !== "NONE") // initially genre-less was denoted by genres = "NONE"
                 .filter((genre) => genre)
                 .forEach((genre) => acc.add(genre));
             return acc;

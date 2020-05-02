@@ -10,7 +10,7 @@ import { FilterLayout } from "./Dashboard/FilterLayout";
 import { NewShowLayout } from "./NewShowLayout";
 
 const FEATURE_NEW_SHOWS_LAYOUT = true;
-const FEATURE_FILTERING = false;
+const FEATURE_FILTERING = true;
 
 const ImgErrorBanner = () => {
     const [useHidBanner, setUserHidBanner] = React.useState(false);

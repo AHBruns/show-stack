@@ -655,34 +655,53 @@ export const NewShowLayout = ({
         <>
             <div className="relative w-full h-full overflow-y-scroll bg-gray-50">
                 <div className="absolute top-0 left-0 right-0 flex flex-wrap justify-center m-4">
-                    {showsData.map((showData) => {
-                        return showData.img ? (
-                            <div
-                                onClick={() => {
-                                    setSelectedShow(showData);
-                                    setShowSelectedShow(true);
-                                }}
-                                className="m-4 transition-all duration-300 ease-in-out transform cursor-pointer md:hover:scale-105"
-                            >
-                                <img
-                                    className="w-full sm:w-36 md:w-48 lg:w-56 xl:w-64"
-                                    src={showData.img}
-                                />
-                            </div>
-                        ) : (
-                            <div
-                                onClick={() => {
-                                    setSelectedShow(showData);
-                                    setShowSelectedShow(true);
-                                }}
-                                className="flex items-center justify-center w-full p-4 m-4 transition-all duration-300 ease-in-out transform bg-gray-800 cursor-pointer md:hover:scale-105 sm:w-36 md:w-48 lg:w-56 xl:w-64"
-                            >
-                                <h1 className="text-2xl font-semibold text-center text-gray-50">
-                                    {showData.title}
-                                </h1>
-                            </div>
-                        );
-                    })}
+                    {showsData
+                        .filter((show) => {
+                            if (
+                                !genresToShow ||
+                                Array.from(genresToShow).length === 0
+                            )
+                                return true;
+                            return Array.from(genresToShow)
+                                .map((genreToShow) => {
+                                    if (!show.genres) return false;
+                                    return (
+                                        show.genres
+                                            .split(",")
+                                            .map((genre) => genre.trim())
+                                            .indexOf(genreToShow) > -1
+                                    );
+                                })
+                                .reduce((acc, value) => acc || value, false);
+                        })
+                        .map((showData) => {
+                            return showData.img ? (
+                                <div
+                                    onClick={() => {
+                                        setSelectedShow(showData);
+                                        setShowSelectedShow(true);
+                                    }}
+                                    className="m-4 transition-all duration-300 ease-in-out transform cursor-pointer md:hover:scale-105"
+                                >
+                                    <img
+                                        className="w-full sm:w-36 md:w-48 lg:w-56 xl:w-64"
+                                        src={showData.img}
+                                    />
+                                </div>
+                            ) : (
+                                <div
+                                    onClick={() => {
+                                        setSelectedShow(showData);
+                                        setShowSelectedShow(true);
+                                    }}
+                                    className="flex items-center justify-center w-full p-4 m-4 transition-all duration-300 ease-in-out transform bg-gray-800 cursor-pointer md:hover:scale-105 sm:w-36 md:w-48 lg:w-56 xl:w-64"
+                                >
+                                    <h1 className="text-2xl font-semibold text-center text-gray-50">
+                                        {showData.title}
+                                    </h1>
+                                </div>
+                            );
+                        })}
                 </div>
             </div>
             <div
