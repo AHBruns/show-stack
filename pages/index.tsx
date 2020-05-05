@@ -1,5 +1,5 @@
 import React from "react";
-import { Login } from "../components/NEW/Login";
+import { Login } from "../components/Login";
 
 export default function IndexPage() {
     return (

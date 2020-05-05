@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import "../public/tailwind.css";
 import "loaders.css";
-import { Header } from "../components/NEW/Header";
+import { Header } from "../components/Header";
 import { UserProvider } from "../contexts/User.context";
 import { SWRConfig } from "swr";
 import fetcher from "../utils/fetcher";
@@ -13,6 +13,7 @@ export default function App({ Component, pageProps }) {
         <>
             <Head>
                 <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+                <title>Watch This Show!</title>
             </Head>
             <style jsx global>{`
                 html,

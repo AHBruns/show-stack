@@ -20,9 +20,30 @@ export const TMDBProvider = ({ children }) => {
         fetcher
     );
 
+    const newMovieGenres = movieGenres?.genres.map(({ id, name }) => {
+        switch (name) {
+            case "Action":
+                return { id, name: "Action & Adventure" };
+            case "Adventure":
+                return { id, name: "Action & Adventure" };
+            case "Science Fiction":
+                return { id, name: "Sci-Fi & Fantasy" };
+            case "Fantasy":
+                return { id, name: "Sci-Fi & Fantasy" };
+            case "War":
+                return { id, name: "War & Politics" };
+            default:
+                return { id, name };
+        }
+    });
+
     const value = {
         televisionGenres: televisionGenres?.genres,
         movieGenres: movieGenres?.genres,
+        genres: [
+            ...(newMovieGenres || []),
+            ...(televisionGenres?.genres || []),
+        ],
         config,
     };
 

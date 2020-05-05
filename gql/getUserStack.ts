@@ -13,6 +13,7 @@ export const GET_USER_STACK = `
           title
           genres
           watched
+          watched_timestamp
         }
       }
     }

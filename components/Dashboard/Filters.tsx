@@ -1,15 +1,25 @@
 import React from "react";
-import { FilterButton } from "./FilterLayout/FilterButton";
-import { OperationButton } from "./shared/OperationButton";
+import { FilterButton } from "./FilterButton";
 
-export const FilterLayout = ({ genresToShow, setGenresToShow, showsData }) => {
+const Flyout = ({ isShown, canShrink, children }: any) => (
+    <div
+        className={`py-2 text-gray-900 bg-white border border-gray-300 rounded-lg overflow-auto shadow-md transform transition-all origin-bottom-right ease-in-out duration-300 ${
+            isShown
+                ? "opacity-100 pointer-events-auto scale-100"
+                : "opacity-0 pointer-events-none scale-50"
+        } ${canShrink ? "flex-shrink-1" : "flex-shrink-0"}`}
+    >
+        {children}
+    </div>
+);
+
+export const Filters = ({ genresToShow, setGenresToShow, showsData }) => {
     const [filtersBarIsOpen, setFiltersBarIsOpen] = React.useState(false);
 
     const [filterType, setFilterType] = React.useState(undefined);
 
     const genres = Array.from(
         showsData.reduce((acc, show) => {
-            console.log(show);
             if (!show.genres) return acc; // ignore genre-less things
             show.genres
                 .split(",")
@@ -23,13 +33,10 @@ export const FilterLayout = ({ genresToShow, setGenresToShow, showsData }) => {
 
     return (
         <div className="fixed inset-0 z-40 pointer-events-none">
-            <div className="absolute flex flex-col items-end mt-4 ml-4 right-4 space-y-4 bottom-4">
-                <div
-                    className={`py-1 text-gray-900 bg-white border border-gray-300 rounded-lg shadow-md pointer-events-auto w-32 ${
-                        filtersBarIsOpen && filterType === "genre"
-                            ? "block"
-                            : "hidden"
-                    }`}
+            <div className="absolute top-0 left-0 flex flex-col items-end justify-end mt-4 ml-4 right-4 space-y-2 bottom-4">
+                <Flyout
+                    canShrink
+                    isShown={filtersBarIsOpen && filterType === "genre"}
                 >
                     {genres.length === 0 ? (
                         <h1 className="max-w-sm text-sm text-gray-700">
@@ -66,7 +73,7 @@ export const FilterLayout = ({ genresToShow, setGenresToShow, showsData }) => {
                                                 ])
                                             );
                                     }}
-                                    className={`px-2 py-1 sm:hover:bg-gray-300 cursor-pointer ${
+                                    className={`pl-2 py-1 sm:hover:bg-gray-300 pr-4 cursor-pointer ${
                                         genresToShow?.has(genre)
                                             ? "bg-gray-200"
                                             : "bg-transparent"
@@ -77,19 +84,18 @@ export const FilterLayout = ({ genresToShow, setGenresToShow, showsData }) => {
                             ))}
                         </ul>
                     )}
-                </div>
-
-                <div className="flex items-center space-x-4">
-                    <div
-                        className={`bg-white text-gray-900 rounded-lg border-gray-300 shadow-md border pointer-events-auto ${
-                            filtersBarIsOpen ? "block" : "hidden"
-                        }`}
-                    >
-                        <OperationButton
+                </Flyout>
+                <Flyout isShown={filtersBarIsOpen}>
+                    <ul>
+                        <li
+                            className="py-1 pl-2 pr-4 cursor-pointer sm:hover:bg-gray-300"
                             onClick={() => setFilterType("genre")}
-                            name="By Genre"
-                        />
-                    </div>
+                        >
+                            By Genre
+                        </li>
+                    </ul>
+                </Flyout>
+                <div className="flex items-center space-x-4">
                     <FilterButton
                         isX={filtersBarIsOpen}
                         onClick={() => {

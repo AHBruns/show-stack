@@ -6,7 +6,9 @@ export const ADD_SHOW = `
     $title: String
     $tags: String
     $genres: String
+    $tmdb_id: bigint
     $stack_id: bigint!
+    $tmdb_media_type: String
   ) {
     insert_show(
       objects: {
@@ -16,6 +18,8 @@ export const ADD_SHOW = `
         tags: $tags
         stack_id: $stack_id
         genres: $genres
+        tmdb_id: $tmdb_id
+        tmdb_media_type: $tmdb_media_type
       }
     ) {
       returning {
@@ -26,6 +30,8 @@ export const ADD_SHOW = `
         img
         genres
         stack_id
+        tmdb_id
+        tmdb_media_type
       }
     }
   }

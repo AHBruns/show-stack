@@ -1,6 +1,6 @@
 import React from "react";
 import { NavItem } from "./Header/NavItem";
-import UserContext from "../../contexts/User.context";
+import UserContext from "../contexts/User.context";
 import { useRouter } from "next/router";
 
 export const Header = ({ hideOn }) => {
@@ -9,7 +9,9 @@ export const Header = ({ hideOn }) => {
 
     const content = (
         <nav className="z-40 w-full bg-white border-b border-gray-200 shadow-2xl">
-            <ul className="z-40 flex items-center justify-end w-full h-full p-1 overflow-scroll sm:p-2 sm:flex-wrap">
+            <ul className="z-40 flex items-center justify-end w-full h-full p-0 overflow-scroll sm:p-2 sm:flex-wrap">
+                <NavItem name="Dashboard" href="/dashboard" />
+                <NavItem name="Watched" href="/watched" />
                 <NavItem
                     name="Logout"
                     href="/"

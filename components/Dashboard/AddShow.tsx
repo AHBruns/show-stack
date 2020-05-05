@@ -1,6 +1,6 @@
 import React from "react";
-import { AddShowButton } from "./AddShowLayout/AddShowButton";
-import { AddShowModal } from "./AddShowLayout/AddShowModal";
+import { AddShowButton } from "./AddShowButton";
+import { AddShowModal } from "./AddShowModal";
 
 const ModalAndBackground = ({
     stackID,
@@ -12,7 +12,7 @@ const ModalAndBackground = ({
             onClick={() => setModalIsOpen(false)}
             className="absolute inset-0 bg-gray-900 opacity-50 pointer-events-auto"
         />
-        <div className="absolute inset-0 flex items-center justify-center p-6 overflow-scroll">
+        <div className="absolute inset-0 flex items-center justify-center p-4 overflow-scroll">
             <AddShowModal
                 stackID={stackID}
                 onClose={() => setModalIsOpen(false)}
@@ -22,7 +22,7 @@ const ModalAndBackground = ({
     </>
 );
 
-export const AddShowLayout = ({ stackID, invalidateOnShowsMutation }) => {
+export const AddShow = ({ stackID, invalidateOnShowsMutation }) => {
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     return (
