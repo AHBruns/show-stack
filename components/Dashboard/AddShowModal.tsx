@@ -7,12 +7,17 @@ import { EType } from "../../utils/fetcher";
 import { Badge } from "./Badge";
 import { ADD_SHOW } from "../../gql/addShow";
 import { TMDBContext } from "../../contexts/TMDB.context";
+import { ConfirmationModalContext } from "../../contexts/ConfirmationModal.context";
 
 export const AddShowModal = ({
     stackID,
     onClose,
     invalidateOnShowsMutation,
 }) => {
+    const setConfirmationModalState = React.useContext(
+        ConfirmationModalContext
+    );
+
     const { genres } = React.useContext(TMDBContext);
 
     const [attemptToAddShow, setAttemptToAddShow] = React.useState(false);
@@ -181,7 +186,26 @@ export const AddShowModal = ({
             <div className="grid grid-cols-3 gap-4 mt-4">
                 <div className="col-span-2">
                     <Button
-                        onClick={() => setAttemptToAddShow(true)}
+                        onClick={() => {
+                            if (TMDBShowSelected) {
+                                setAttemptToAddShow(true);
+                            } else {
+                                setConfirmationModalState({
+                                    prompt:
+                                        "Do you still want to create this custom show?",
+                                    postPrompt:
+                                        "You're trying to create a custom show (rather than selecting a search result). Unfortunately, custom shows don't have a lot of the cool built-in features that regular shows do.",
+                                    yea: {
+                                        onClick: () =>
+                                            setAttemptToAddShow(true),
+                                        buttonText: "Make it!",
+                                    },
+                                    nay: {
+                                        buttonText: "Cancel",
+                                    },
+                                });
+                            }
+                        }}
                         disabled={isValidating}
                     >
                         Make it!

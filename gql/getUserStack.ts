@@ -14,6 +14,7 @@ export const GET_USER_STACK = `
           genres
           watched
           watched_timestamp
+          tmdb_media_type
         }
       }
     }

@@ -18,7 +18,7 @@ const XLDetailsCard = ({ buttons, show, onClose }) => {
         <>
             <DetailsCardBG />
             <div className="fixed inset-0 flex items-center justify-center">
-                <div className="flex w-2/3 rounded-md shadow-2xl h-2/3 bg-gray-50">
+                <div className="relative flex w-2/3 rounded-md shadow-2xl h-2/3 bg-gray-50">
                     {show.img ? (
                         <img
                             src={show.img}
@@ -29,6 +29,11 @@ const XLDetailsCard = ({ buttons, show, onClose }) => {
                             <h1 className="text-4xl font-semibold text-center text-gray-50">
                                 {show.title}
                             </h1>
+                        </div>
+                    )}
+                    {show.tmdb_media_type && (
+                        <div className="absolute top-0 left-0 px-2 py-1 font-bold tracking-wider text-gray-800 transform -translate-x-8 -translate-y-8 rounded-lg shadow-lg bg-gray-50">
+                            {show.tmdb_media_type?.toUpperCase()}
                         </div>
                     )}
                     <div className="flex-1 my-10 mr-10 space-y-4">
@@ -101,7 +106,7 @@ const LGDetailsCard = ({ buttons, show, onClose }) => {
             <DetailsCardBG />
             <div className="fixed inset-0 flex items-center justify-center">
                 <div className="w-full h-full p-12 overflow-hidden">
-                    <div className="flex items-stretch w-full h-full overflow-hidden rounded-lg shadow-2xl">
+                    <div className="relative flex items-stretch w-full h-full overflow-hidden rounded-lg shadow-2xl">
                         {show.img ? (
                             <img src={show.img} className="h-full" />
                         ) : (
@@ -119,6 +124,9 @@ const LGDetailsCard = ({ buttons, show, onClose }) => {
                                 </svg>
                             </div>
                         )}
+                        <div className="absolute px-2 py-1 font-bold tracking-wider text-gray-800 rounded-lg shadow-lg top-4 left-4 bg-gray-50">
+                            {show.tmdb_media_type?.toUpperCase()}
+                        </div>
                         <div className="flex flex-col flex-1">
                             <div className="flex-1 p-8 bg-white">
                                 <h1 className="text-4xl font-bold tracking-wider text-gray-900">
@@ -219,6 +227,9 @@ const MDDetailsCard = ({ buttons, show, onClose }) => {
                                         src={show.img}
                                         className="h-full shadow-2xl"
                                     />
+                                    <div className="absolute px-2 py-1 mx-auto font-bold tracking-wider text-gray-800 rounded-lg shadow-lg top-2 bg-gray-50">
+                                        {show.tmdb_media_type?.toUpperCase()}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -322,6 +333,9 @@ const SMDetailsCard = ({ buttons, show, onClose }) => {
                                         src={show.img}
                                         className="h-full shadow-2xl"
                                     />
+                                </div>
+                                <div className="absolute top-0 right-0 h-8 px-2 py-1 mx-auto font-bold tracking-wider text-gray-800 rounded-bl-lg shadow-lg bg-gray-50">
+                                    {show.tmdb_media_type?.toUpperCase()}
                                 </div>
                             </div>
                         </div>

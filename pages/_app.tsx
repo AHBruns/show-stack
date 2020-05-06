@@ -7,6 +7,7 @@ import { UserProvider } from "../contexts/User.context";
 import { SWRConfig } from "swr";
 import fetcher from "../utils/fetcher";
 import { TMDBProvider } from "../contexts/TMDB.context";
+import { ConfirmationModalProvider } from "../contexts/ConfirmationModal.context";
 
 export default function App({ Component, pageProps }) {
     return (
@@ -25,12 +26,16 @@ export default function App({ Component, pageProps }) {
             <SWRConfig value={{ fetcher }}>
                 <TMDBProvider>
                     <UserProvider>
-                        <div className="flex flex-col w-full h-full bg-white">
-                            <Header hideOn={new Set([, "/", "/register"])} />
-                            <main className="relative flex flex-col flex-1 w-full">
-                                <Component {...pageProps} />
-                            </main>
-                        </div>
+                        <ConfirmationModalProvider>
+                            <div className="flex flex-col w-full h-full bg-white">
+                                <Header
+                                    hideOn={new Set([, "/", "/register"])}
+                                />
+                                <main className="relative flex flex-col flex-1 w-full">
+                                    <Component {...pageProps} />
+                                </main>
+                            </div>
+                        </ConfirmationModalProvider>
                     </UserProvider>
                 </TMDBProvider>
             </SWRConfig>

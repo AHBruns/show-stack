@@ -7,6 +7,7 @@ import { useRestoreUserOrRedirect } from "../hooks/useRestorUserOrRedirect";
 import { AddShow } from "./Dashboard/AddShow";
 import { Filters } from "./Dashboard/Filters";
 import { Shows } from "./Reuseables/Shows";
+import { ConfirmationModalContext } from "../contexts/ConfirmationModal.context";
 
 export const Dashboard = () => {
     const [userState] = React.useContext(UserContext);
