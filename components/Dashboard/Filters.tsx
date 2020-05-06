@@ -55,22 +55,28 @@ export const Filters = ({ genresToShow, setGenresToShow, showsData }) => {
                                 <li
                                     onClick={() => {
                                         if (genresToShow?.has(genre)) {
-                                            genresToShow.delete(genre);
-                                            return setGenresToShow(
-                                                new Set([
-                                                    ...Array.from(
-                                                        genresToShow ?? []
-                                                    ),
-                                                ])
-                                            );
+                                            // just doing one genre at a time now
+                                            //
+                                            // genresToShow.delete(genre);
+                                            // return setGenresToShow(
+                                            //     new Set([
+                                            //         ...Array.from(
+                                            //             genresToShow ?? []
+                                            //         ),
+                                            //     ])
+                                            // );
+                                            return setGenresToShow(new Set([]));
                                         } else
                                             return setGenresToShow(
-                                                new Set([
-                                                    ...Array.from(
-                                                        genresToShow ?? []
-                                                    ),
-                                                    genre,
-                                                ])
+                                                // just doing one genre at a time now
+                                                //
+                                                // new Set([
+                                                //     ...Array.from(
+                                                //         genresToShow ?? []
+                                                //     ),
+                                                //     genre,
+                                                // ])
+                                                new Set([genre])
                                             );
                                     }}
                                     className={`pl-2 py-1 sm:hover:bg-gray-300 pr-4 cursor-pointer ${
