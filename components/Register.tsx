@@ -16,7 +16,7 @@ export const Register = () => {
         values.password,
         () => {
             alert("You're in! You will now be redirected to the login page.");
-            router.push("/");
+            router.push("/login");
         }
     );
 
@@ -73,7 +73,7 @@ export const Register = () => {
             />
             <Button onClick={execute}>Register</Button>
             <OrBreakline />
-            <Button type="button" onClick={() => router.push("/")}>
+            <Button type="button" onClick={() => router.push("/login")}>
                 Login
             </Button>
         </div>

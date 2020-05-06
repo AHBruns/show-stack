@@ -11,7 +11,7 @@ export const useRestoreUserOrRedirect = () => {
         if (userState.stage === EUserStage.LOGGED_IN) return;
 
         userOperations.attemptLoggingInFromLocalStorage(undefined, () =>
-            router.push("/")
+            router.push("/login")
         );
     }, [userState]);
 };

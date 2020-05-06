@@ -29,7 +29,9 @@ export default function App({ Component, pageProps }) {
                         <ConfirmationModalProvider>
                             <div className="flex flex-col w-full h-full bg-white">
                                 <Header
-                                    hideOn={new Set([, "/", "/register"])}
+                                    hideOn={
+                                        new Set([, "/", "/login", "/register"])
+                                    }
                                 />
                                 <main className="relative flex flex-col flex-1 w-full">
                                     <Component {...pageProps} />
