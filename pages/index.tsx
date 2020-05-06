@@ -188,7 +188,7 @@ export default function IndexPage() {
                                             </Link>
                                         </div>
                                         <div className="mt-3 sm:mt-0 sm:ml-3">
-                                            <Link href="/register">
+                                            <Link href="/login">
                                                 <a
                                                     href="/login"
                                                     className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-blue-700 transition duration-150 ease-in-out bg-blue-100 border border-transparent rounded-md hover:text-blue-600 hover:bg-blue-50 focus:outline-none focus:shadow-outline focus:border-blue-300 md:py-4 md:text-lg md:px-10"
