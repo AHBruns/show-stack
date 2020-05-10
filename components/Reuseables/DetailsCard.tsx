@@ -42,8 +42,16 @@ const XLDetailsCard = ({ buttons, show, onClose }) => {
                         </h1>
                         <hr className="border-gray-200" />
                         <div className="space-y-2">
-                            {show.genres && (
+                            {(show.genres || show.tmdb_run_time) && (
                                 <p className="text-sm font-light text-gray-700">
+                                    <span className="font-semibold">
+                                        {show.tmdb_run_time && (
+                                            <>
+                                                {show.tmdb_run_time}{" "}
+                                                mins.&nbsp;&nbsp;
+                                            </>
+                                        )}
+                                    </span>
                                     {show.genres
                                         .split(",")
                                         .map((genre) => genre.trim())
@@ -124,9 +132,11 @@ const LGDetailsCard = ({ buttons, show, onClose }) => {
                                 </svg>
                             </div>
                         )}
-                        <div className="absolute px-2 py-1 font-bold tracking-wider text-gray-800 rounded-lg shadow-lg top-4 left-4 bg-gray-50">
-                            {show.tmdb_media_type?.toUpperCase()}
-                        </div>
+                        {show.tmdb_media_type && (
+                            <div className="absolute px-2 py-1 font-bold tracking-wider text-gray-800 rounded-lg shadow-lg top-4 left-4 bg-gray-50">
+                                {show.tmdb_media_type?.toUpperCase()}
+                            </div>
+                        )}
                         <div className="flex flex-col flex-1">
                             <div className="flex-1 p-8 bg-white">
                                 <h1 className="text-4xl font-bold tracking-wider text-gray-900">
@@ -136,17 +146,35 @@ const LGDetailsCard = ({ buttons, show, onClose }) => {
                                     <hr className="border-gray-200" />
                                 </div>
                                 <div className="mt-4">
-                                    <div className="flex">
-                                        {show.tags
-                                            .split(",")
-                                            .map((tag) => tag.trim())
-                                            .filter((tag) => tag)
-                                            .map((tag) => (
-                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-gray-200 text-gray-800">
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                    </div>
+                                    {(show.genres || show.tmdb_run_time) && (
+                                        <p className="text-sm font-light text-gray-700">
+                                            <span className="font-semibold">
+                                                {show.tmdb_run_time && (
+                                                    <>
+                                                        {show.tmdb_run_time}{" "}
+                                                        mins.&nbsp;&nbsp;
+                                                    </>
+                                                )}
+                                            </span>
+                                            {show.genres
+                                                .split(",")
+                                                .map((genre) => genre.trim())
+                                                .join(" | ")}
+                                        </p>
+                                    )}
+                                    {show.tags && (
+                                        <div className="flex mt-2">
+                                            {show.tags
+                                                .split(",")
+                                                .map((tag) => tag.trim())
+                                                .filter((tag) => tag)
+                                                .map((tag) => (
+                                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-gray-200 text-gray-800">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="mt-4">
                                     <hr className="border-gray-200" />
@@ -227,9 +255,11 @@ const MDDetailsCard = ({ buttons, show, onClose }) => {
                                         src={show.img}
                                         className="h-full shadow-2xl"
                                     />
-                                    <div className="absolute px-2 py-1 mx-auto font-bold tracking-wider text-gray-800 rounded-lg shadow-lg top-2 bg-gray-50">
-                                        {show.tmdb_media_type?.toUpperCase()}
-                                    </div>
+                                    {show.tmdb_media_type && (
+                                        <div className="absolute px-2 py-1 mx-auto font-bold tracking-wider text-gray-800 rounded-lg shadow-lg top-2 bg-gray-50">
+                                            {show.tmdb_media_type?.toUpperCase()}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -242,17 +272,35 @@ const MDDetailsCard = ({ buttons, show, onClose }) => {
                                     <hr className="border-gray-200" />
                                 </div>
                                 <div className="mt-4">
-                                    <div className="flex">
-                                        {show.tags
-                                            .split(",")
-                                            .map((tag) => tag.trim())
-                                            .filter((tag) => tag)
-                                            .map((tag) => (
-                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-gray-200 text-gray-800">
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                    </div>
+                                    {(show.genres || show.tmdb_run_time) && (
+                                        <p className="text-sm font-light text-gray-700">
+                                            <span className="font-semibold">
+                                                {show.tmdb_run_time && (
+                                                    <>
+                                                        {show.tmdb_run_time}{" "}
+                                                        mins.&nbsp;&nbsp;
+                                                    </>
+                                                )}
+                                            </span>
+                                            {show.genres
+                                                .split(",")
+                                                .map((genre) => genre.trim())
+                                                .join(" | ")}
+                                        </p>
+                                    )}
+                                    {show.tags && (
+                                        <div className="flex mt-2">
+                                            {show.tags
+                                                .split(",")
+                                                .map((tag) => tag.trim())
+                                                .filter((tag) => tag)
+                                                .map((tag) => (
+                                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-gray-200 text-gray-800">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="mt-4">
                                     <hr className="border-gray-200" />
@@ -331,12 +379,14 @@ const SMDetailsCard = ({ buttons, show, onClose }) => {
                                 <div className="flex items-center justify-center h-full">
                                     <img
                                         src={show.img}
-                                        className="h-full shadow-2xl"
+                                        className="object-contain h-full shadow-2xl"
                                     />
                                 </div>
-                                <div className="absolute top-0 right-0 h-8 px-2 py-1 mx-auto font-bold tracking-wider text-gray-800 rounded-bl-lg shadow-lg bg-gray-50">
-                                    {show.tmdb_media_type?.toUpperCase()}
-                                </div>
+                                {show.tmdb_media_type && (
+                                    <div className="absolute top-0 right-0 h-8 px-2 py-1 mx-auto font-bold tracking-wider text-gray-800 rounded-bl-lg shadow-lg bg-gray-50">
+                                        {show.tmdb_media_type?.toUpperCase()}
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="flex flex-col bg-white">
@@ -348,17 +398,35 @@ const SMDetailsCard = ({ buttons, show, onClose }) => {
                                     <hr className="border-gray-200" />
                                 </div>
                                 <div className="mt-4">
-                                    <div className="flex">
-                                        {show.tags
-                                            .split(",")
-                                            .map((tag) => tag.trim())
-                                            .filter((tag) => tag)
-                                            .map((tag) => (
-                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-gray-200 text-gray-800">
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                    </div>
+                                    {(show.genres || show.tmdb_run_time) && (
+                                        <p className="text-sm font-light text-gray-700">
+                                            <span className="font-semibold">
+                                                {show.tmdb_run_time && (
+                                                    <>
+                                                        {show.tmdb_run_time}{" "}
+                                                        mins.&nbsp;&nbsp;
+                                                    </>
+                                                )}
+                                            </span>
+                                            {show.genres
+                                                .split(",")
+                                                .map((genre) => genre.trim())
+                                                .join(" | ")}
+                                        </p>
+                                    )}
+                                    {show.tags && (
+                                        <div className="flex mt-2">
+                                            {show.tags
+                                                .split(",")
+                                                .map((tag) => tag.trim())
+                                                .filter((tag) => tag)
+                                                .map((tag) => (
+                                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-gray-200 text-gray-800">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="mt-4">
                                     <hr className="border-gray-200" />

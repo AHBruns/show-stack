@@ -7,14 +7,26 @@ import { useRestoreUserOrRedirect } from "../hooks/useRestorUserOrRedirect";
 import { AddShow } from "./Dashboard/AddShow";
 import { Filters } from "./Dashboard/Filters";
 import { Shows } from "./Reuseables/Shows";
-import { ConfirmationModalContext } from "../contexts/ConfirmationModal.context";
+import { Spinner } from "./Reuseables/Spinner";
+import { byID } from "../utils/fetcher/tmdb";
+import { hasuraClient } from "../utils/fetcher";
+import { ADD_MISSING_FIELD } from "../gql/addMissingFields";
 
 export const Dashboard = () => {
     const [userState] = React.useContext(UserContext);
 
     const [genresToShow, setGenresToShow] = React.useState(undefined);
 
+    const [runtimeRange, setRuntimeRange] = React.useState([0, 500]);
+
+    const [spinnerIsVisible, setSpinnerIsVisible] = React.useState(false);
+
     useRestoreUserOrRedirect();
+
+    React.useEffect(() => {
+        // if we aren't loaded after a second show a spinner
+        setTimeout(() => setSpinnerIsVisible(true), 1000);
+    }, []);
 
     const swrArgs = React.useMemo(
         () => [
@@ -28,12 +40,49 @@ export const Dashboard = () => {
 
     let { data, error } = useSWR(userState.user?.id ? swrArgs : null);
 
+    React.useEffect(() => {
+        const shows = data?.user_by_pk?.stack?.shows;
+        if (!shows) return;
+
+        // we'd like all our shows to have this info, but some old shows don't
+        // we then try to upgrade these old shows when we see them
+        const idealFields = ["tmdb_media_type", "tmdb_run_time"];
+
+        shows.forEach(async (show) => {
+            if (!show.tmdb_id) return;
+            const shouldAttemptToUpdate = idealFields.reduce((acc, elem) => {
+                return acc || show[elem] === null;
+            }, false);
+            console.log(shouldAttemptToUpdate);
+            if (shouldAttemptToUpdate) {
+                const respBody = await byID({
+                    tmdb_id: show.tmdb_id,
+                    title: show.title,
+                });
+                hasuraClient.request(ADD_MISSING_FIELD, {
+                    id: show.id,
+                    tmdb_media_type: respBody.media_type ?? null,
+                    tmdb_run_time:
+                        respBody.runtime ??
+                        respBody.episode_run_time[0] ??
+                        null,
+                });
+            }
+        });
+    }, [data]);
+
     if (error)
         return (
             <div className="flex items-center justify-center w-full h-full p-4">
                 <p className="max-w-md p-8 text-2xl font-medium tracking-widest text-center text-gray-900 bg-white border border-gray-200 rounded-lg shadow-2xl">
                     Oops! Looks like something went wrong.
                 </p>
+            </div>
+        );
+    if (!data && spinnerIsVisible)
+        return (
+            <div className="flex items-center justify-center w-full h-full">
+                <Spinner />
             </div>
         );
     if (!data) return null;
@@ -43,6 +92,7 @@ export const Dashboard = () => {
             {data.user_by_pk.stack.shows.length > 0 ? (
                 <Shows
                     genresToShow={genresToShow}
+                    runtimeRange={runtimeRange}
                     showsData={data.user_by_pk.stack.shows.filter(
                         (show) => !show.watched
                     )}
@@ -99,6 +149,8 @@ export const Dashboard = () => {
             )}
             {data.user_by_pk.stack.shows.length > 0 && (
                 <Filters
+                    runtimeRange={runtimeRange}
+                    setRuntimeRange={setRuntimeRange}
                     genresToShow={genresToShow}
                     setGenresToShow={setGenresToShow}
                     showsData={data.user_by_pk.stack.shows}

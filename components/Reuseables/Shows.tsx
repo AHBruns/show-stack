@@ -3,6 +3,7 @@ import { DetailsCard } from "./DetailsCard";
 
 export const Shows = ({
     genresToShow,
+    runtimeRange,
     showsData,
     invalidateOnShowsMutation,
     showTimestamps,
@@ -35,6 +36,13 @@ export const Shows = ({
                                 })
                                 .reduce((acc, value) => acc || value, false);
                         })
+                        .filter((show) => {
+                            if (!show.tmdb_run_time) return false;
+                            return (
+                                show.tmdb_run_time >= runtimeRange[0] &&
+                                show.tmdb_run_time <= runtimeRange[1]
+                            );
+                        })
                         .map((showData) => {
                             return showData.img ? (
                                 <div
@@ -42,21 +50,28 @@ export const Shows = ({
                                         setSelectedShow(showData);
                                         setShowSelectedShow(true);
                                     }}
-                                    className="relative m-4 transition-all duration-300 ease-in-out transform cursor-pointer md:hover:scale-105"
+                                    className="relative w-full m-4 transition-all duration-300 ease-in-out transform bg-gray-900 cursor-pointer sm:w-36 md:w-48 lg:w-56 xl:w-64 /w-full md:hover:scale-105"
                                 >
-                                    <img
-                                        className="w-full sm:w-36 md:w-48 lg:w-56 xl:w-64"
-                                        src={showData.img}
-                                    />
-                                    {showTimestamps && (
-                                        <p className="absolute top-0 left-0 px-3 py-1 -mt-3 -ml-3 text-xs tracking-wider text-white bg-gray-800 rounded-full shadow-md">
-                                            {showData.watched_timestamp
-                                                ? new Date(
-                                                      showData.watched_timestamp
-                                                  ).toLocaleDateString()
-                                                : "???"}
-                                        </p>
-                                    )}
+                                    <div
+                                        className="w-full h-0"
+                                        style={{
+                                            paddingTop: "150%",
+                                        }}
+                                    >
+                                        <img
+                                            className="absolute inset-0 object-cover"
+                                            src={showData.img}
+                                        />
+                                        {showTimestamps && (
+                                            <p className="absolute top-0 left-0 px-3 py-1 -mt-3 -ml-3 text-xs tracking-wider text-white bg-gray-800 rounded-full shadow-md">
+                                                {showData.watched_timestamp
+                                                    ? new Date(
+                                                          showData.watched_timestamp
+                                                      ).toLocaleDateString()
+                                                    : "???"}
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
                             ) : (
                                 <div

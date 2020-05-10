@@ -5,6 +5,7 @@ import { GET_USER } from "../../gql/getUser";
 
 export const useLogin = (email: string, password: string, _onSuccess: any) => {
     const [isReady, setIsReady] = useState(false);
+    const [isLoadingSlowly, setIsLoadingSlowly] = useState(false);
 
     const [onSuccess] = useState(() => _onSuccess);
 
@@ -20,9 +21,16 @@ export const useLogin = (email: string, password: string, _onSuccess: any) => {
     );
 
     const { data, error } = useSWR(isReady && swrArgs, {
-        onSuccess: onSuccess,
-        onError: () => setIsReady(false),
+        onSuccess: (data) => {
+            setIsLoadingSlowly(false);
+            onSuccess(data);
+        },
+        onError: () => {
+            setIsReady(false);
+            setIsLoadingSlowly(false);
+        },
+        onLoadingSlow: () => setIsLoadingSlowly(true),
     });
 
-    return [() => setIsReady(true), data, error];
+    return [() => setIsReady(true), data, error, isLoadingSlowly];
 };

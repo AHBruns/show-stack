@@ -11,6 +11,7 @@ import { Error } from "./Reuseables/Error";
 import { FormHeader } from "./Reuseables/FormHeader";
 import { InputWithError } from "./Reuseables/InputWithError";
 import { useAttemptRestore } from "./Login/useAttemptRestore";
+import { Spinner } from "./Reuseables/Spinner";
 
 export const Login = () => {
     // using this instead of the swr error value because this error state isn't actually a graphql error
@@ -22,10 +23,12 @@ export const Login = () => {
 
     const router = useRouter();
 
-    const [execute, __, errors] = useLogin(
+    const [execute, __, errors, isLoadingSlowly] = useLogin(
         values.email,
         values.password,
         (data) => {
+            console.log(data);
+            alert(JSON.stringify(data));
             if (data.user.length === 0) {
                 setShowErrorMessage(true);
             } else {
@@ -35,6 +38,7 @@ export const Login = () => {
                     payload: data.user[0],
                 });
                 userOperations.attemptToPersistUser(data.user[0]);
+                alert("going to dashboard");
                 router.push("/dashboard");
             }
         }
@@ -43,68 +47,75 @@ export const Login = () => {
     useAttemptRestore();
 
     return (
-        <div className="relative w-full max-w-sm p-4 m-4 overflow-hidden bg-white border-gray-300 rounded-lg shadow-lg space-y-4">
-            <FormHeader>Login</FormHeader>
-            <InputWithError
-                key="email"
-                label="Email"
-                name="email"
-                type="email"
-                autoComplete="off"
-                onChange={(e) =>
-                    setValues({ ...values, email: e.target.value })
-                }
-                value={values.email}
-                id="email"
-                errors={errors}
-                possibleErrors={[
-                    {
-                        path: "$.variableValues.email",
-                        code: "validation-failed",
-                        errorMessage:
-                            "We couldn't validate this field. Maybe you forgot to fill it in?",
-                    },
-                ]}
-            />
-            <InputWithError
-                key="password"
-                label="Password"
-                name="password"
-                type="password"
-                autoComplete="off"
-                onChange={(e) =>
-                    setValues({ ...values, password: e.target.value })
-                }
-                value={values.password}
-                id="password"
-                errors={errors}
-                possibleErrors={[
-                    {
-                        path: "$.variableValues.password",
-                        code: "validation-failed",
-                        errorMessage:
-                            "We couldn't validate this field. Maybe you forgot to fill it in?",
-                    },
-                ]}
-            >
-                {showErrorMessage && (
-                    <Error id="password" key="password-error">
-                        An incorrect email and/or password was provided.
-                    </Error>
-                )}
-            </InputWithError>
-            <Button
-                onClick={() => {
-                    setShowErrorMessage(false);
-                    execute();
-                }}
-            >
-                Log In
-            </Button>
-            <OrBreakline />
-            <Button type="button" onClick={() => router.push("/register")}>
-                Register
-            </Button>
-        </div>
+        <>
+            <div className="relative w-full max-w-sm p-4 m-4 overflow-hidden bg-white border-gray-300 rounded-lg shadow-lg space-y-4">
+                <FormHeader>Login</FormHeader>
+                <InputWithError
+                    key="email"
+                    label="Email"
+                    name="email"
+                    type="email"
+                    autoComplete="off"
+                    onChange={(e) =>
+                        setValues({ ...values, email: e.target.value })
+                    }
+                    value={values.email}
+                    id="email"
+                    errors={errors}
+                    possibleErrors={[
+                        {
+                            path: "$.variableValues.email",
+                            code: "validation-failed",
+                            errorMessage:
+                                "We couldn't validate this field. Maybe you forgot to fill it in?",
+                        },
+                    ]}
+                />
+                <InputWithError
+                    key="password"
+                    label="Password"
+                    name="password"
+                    type="password"
+                    autoComplete="off"
+                    onChange={(e) =>
+                        setValues({ ...values, password: e.target.value })
+                    }
+                    value={values.password}
+                    id="password"
+                    errors={errors}
+                    possibleErrors={[
+                        {
+                            path: "$.variableValues.password",
+                            code: "validation-failed",
+                            errorMessage:
+                                "We couldn't validate this field. Maybe you forgot to fill it in?",
+                        },
+                    ]}
+                >
+                    {showErrorMessage && (
+                        <Error id="password" key="password-error">
+                            An incorrect email and/or password was provided.
+                        </Error>
+                    )}
+                </InputWithError>
+                <Button
+                    onClick={() => {
+                        setShowErrorMessage(false);
+                        execute();
+                    }}
+                >
+                    Log In
+                </Button>
+                <OrBreakline />
+                <Button type="button" onClick={() => router.push("/register")}>
+                    Register
+                </Button>
+            </div>
+            {isLoadingSlowly && (
+                <div className="fixed inset-0 flex items-center justify-center">
+                    <Spinner />
+                </div>
+            )}
+        </>
     );
 };

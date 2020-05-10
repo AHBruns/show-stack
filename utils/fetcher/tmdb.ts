@@ -6,6 +6,8 @@ import {
     TelevisionGenres,
     MovieGenres,
     Configuration,
+    TV,
+    Movie,
 } from "./tmdb/urlSnippets";
 
 const headers = () =>
@@ -48,4 +50,47 @@ export const config = async () => {
     });
     let data = await res.json();
     return data;
+};
+
+export const byID = async ({ tmdb_id, title }) => {
+    let res1;
+    try {
+        res1 = await fetch(`${BaseTMDB}${TV}${tmdb_id}&language=en-US`, {
+            headers: headers(),
+        });
+    } catch (err) {
+        res1 = {
+            json: () => undefined,
+        };
+    }
+    let res2;
+
+    try {
+        res2 = await fetch(`${BaseTMDB}${Movie}${tmdb_id}&language=en-US`, {
+            headers: headers(),
+        });
+    } catch (err) {
+        res2 = {
+            json: () => undefined,
+        };
+    }
+    const resps = await Promise.all([res1.json(), res2.json()]);
+    console.log(resps);
+    if (resps[0].id === undefined && resps[1].id !== undefined)
+        return { ...resps[1], media_type: "movie" };
+    else if (resps[1].id === undefined && resps[0].id !== undefined)
+        return { ...resps[0], media_type: "tv" };
+    else if (
+        resps[0].name === title ||
+        resps[0].original_title === title ||
+        resps[0].title === title
+    )
+        return { ...resps[0], media_type: "tv" };
+    else if (
+        resps[1].name === title ||
+        resps[1].original_title === title ||
+        resps[1].title === title
+    )
+        return { ...resps[1], media_type: "movie" };
+    else throw "can't find a corresponding show";
 };

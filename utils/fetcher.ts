@@ -1,5 +1,11 @@
 import { GraphQLClient } from "graphql-request";
-import { search, televisionGenres, movieGenres, config } from "./fetcher/tmdb";
+import {
+    search,
+    televisionGenres,
+    movieGenres,
+    config,
+    byID,
+} from "./fetcher/tmdb";
 
 export enum EType {
     LOCAL_STORAGE,
@@ -10,7 +16,7 @@ export enum EType {
     TMDB_CONFIG,
 }
 
-const hasuraClient = new GraphQLClient(
+export const hasuraClient = new GraphQLClient(
     "https://show-stack.herokuapp.com/v1/graphql",
     {
         headers: {
