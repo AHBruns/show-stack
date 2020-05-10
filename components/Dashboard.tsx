@@ -1,5 +1,5 @@
 import React from "react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import UserContext from "../contexts/User.context";
 import { EType as EFetchType } from "../utils/fetcher";
 import { GET_USER_STACK } from "../gql/getUserStack";
@@ -18,6 +18,10 @@ export const Dashboard = () => {
     const [genresToShow, setGenresToShow] = React.useState(undefined);
 
     const [runtimeRange, setRuntimeRange] = React.useState([0, 500]);
+
+    const [hideRuntimelessShows, setHideRuntimelessShows] = React.useState(
+        false
+    );
 
     const [spinnerIsVisible, setSpinnerIsVisible] = React.useState(false);
 
@@ -59,7 +63,7 @@ export const Dashboard = () => {
                     tmdb_id: show.tmdb_id,
                     title: show.title,
                 });
-                hasuraClient.request(ADD_MISSING_FIELD, {
+                await hasuraClient.request(ADD_MISSING_FIELD, {
                     id: show.id,
                     tmdb_media_type: respBody.media_type ?? null,
                     tmdb_run_time:
@@ -67,6 +71,7 @@ export const Dashboard = () => {
                         respBody.episode_run_time[0] ??
                         null,
                 });
+                mutate(swrArgs);
             }
         });
     }, [data]);
@@ -91,6 +96,7 @@ export const Dashboard = () => {
         <>
             {data.user_by_pk.stack.shows.length > 0 ? (
                 <Shows
+                    hideRuntimelessShows={hideRuntimelessShows}
                     genresToShow={genresToShow}
                     runtimeRange={runtimeRange}
                     showsData={data.user_by_pk.stack.shows.filter(
@@ -149,6 +155,8 @@ export const Dashboard = () => {
             )}
             {data.user_by_pk.stack.shows.length > 0 && (
                 <Filters
+                    hideRuntimelessShows={hideRuntimelessShows}
+                    setHideRuntimelessShows={setHideRuntimelessShows}
                     runtimeRange={runtimeRange}
                     setRuntimeRange={setRuntimeRange}
                     genresToShow={genresToShow}

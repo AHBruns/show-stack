@@ -18,6 +18,8 @@ export const Filters = ({
     setGenresToShow,
     runtimeRange,
     setRuntimeRange,
+    hideRuntimelessShows,
+    setHideRuntimelessShows,
     showsData,
 }) => {
     const [filtersBarIsOpen, setFiltersBarIsOpen] = React.useState(false);
@@ -102,6 +104,70 @@ export const Filters = ({
                         ))}
                     {filterType === "runtime" && (
                         <div className="w-72">
+                            <p className="flex items-start px-2 py-1 text-sm">
+                                Hide Shows W/O Runtime Data:&nbsp;
+                                <span
+                                    role="checkbox"
+                                    tabIndex={0}
+                                    onClick={() =>
+                                        setHideRuntimelessShows(
+                                            !hideRuntimelessShows
+                                        )
+                                    }
+                                    aria-checked="false"
+                                    className={`relative flex-shrink-0 inline-block h-6 transition-colors duration-200 ease-in-out border-2 transform scale-90 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:shadow-outline ${
+                                        hideRuntimelessShows
+                                            ? "bg-blue-600"
+                                            : "bg-gray-200"
+                                    }`}
+                                >
+                                    <span
+                                        aria-hidden="true"
+                                        className={`relative inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow ${
+                                            hideRuntimelessShows
+                                                ? "translate-x-5"
+                                                : "translate-x-0"
+                                        }`}
+                                    >
+                                        <span
+                                            className={`absolute inset-0 flex items-center justify-center w-full h-full transition-opacity ${
+                                                hideRuntimelessShows
+                                                    ? "opacity-0 ease-out duration-100"
+                                                    : "opacity-100 ease-in duration-200"
+                                            }`}
+                                        >
+                                            <svg
+                                                className="w-3 h-3 text-gray-400"
+                                                fill="none"
+                                                viewBox="0 0 12 12"
+                                            >
+                                                <path
+                                                    d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
+                                                    stroke="currentColor"
+                                                    strokeWidth={2}
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                />
+                                            </svg>
+                                        </span>
+                                        <span
+                                            className={`absolute inset-0 flex items-center justify-center w-full h-full transition-opacity ${
+                                                hideRuntimelessShows
+                                                    ? "opacity-100 ease-in duration-200"
+                                                    : "opacity-0 ease-out duration-100"
+                                            }`}
+                                        >
+                                            <svg
+                                                className="w-3 h-3 text-blue-600"
+                                                fill="currentColor"
+                                                viewBox="0 0 12 12"
+                                            >
+                                                <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                </span>
+                            </p>
                             <div className="px-2 py-1">
                                 <p className="text-sm">
                                     Max Runtime: {runtimeRange[1]} mins.
@@ -172,6 +238,7 @@ export const Filters = ({
                             setFilterType(undefined);
                             setGenresToShow(undefined);
                             setRuntimeRange([0, 500]);
+                            setHideRuntimelessShows(false);
                         }}
                     />
                 </div>

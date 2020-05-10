@@ -4,6 +4,7 @@ import { DetailsCard } from "./DetailsCard";
 export const Shows = ({
     genresToShow,
     runtimeRange,
+    hideRuntimelessShows,
     showsData,
     invalidateOnShowsMutation,
     showTimestamps,
@@ -37,7 +38,8 @@ export const Shows = ({
                                 .reduce((acc, value) => acc || value, false);
                         })
                         .filter((show) => {
-                            if (!show.tmdb_run_time) return false;
+                            if (!show.tmdb_run_time)
+                                return !hideRuntimelessShows;
                             return (
                                 show.tmdb_run_time >= runtimeRange[0] &&
                                 show.tmdb_run_time <= runtimeRange[1]
